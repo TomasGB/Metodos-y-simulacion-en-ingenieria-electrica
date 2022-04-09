@@ -1,4 +1,6 @@
 clear
+clc
+
 dim=100;
 tablero=rand(dim,dim)>.4;%randi([0,1],dim,dim);
 tablero(1,:)=0;
@@ -8,7 +10,7 @@ tablero(:,dim)=0;
 
 tablero_aux=[];
 
-while true
+for l=1:300
 vivos=0;
 
 for i=2:dim-1
@@ -84,8 +86,11 @@ end
     tablero_aux(dim,:)=0;
     tablero_aux(:,dim)=0;
     %disp(tablero_aux)
-
+  
+ 
  imshow(tablero_aux,'InitialMagnification',350)
+ title(strcat({'generacion: '},num2str(l)));
+ drawnow();
  tablero=tablero_aux;
 end
     
