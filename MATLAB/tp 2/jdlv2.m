@@ -5,13 +5,16 @@ clc
 dim=100;
 tablero=rand(dim,dim)>.4;%randi([0,1],dim,dim);
 
+%tablero=dlmread('tablero_2.txt');
+%dlmwrite('tablero_2.txt',tablero)
+
 diametro=dim-10;%para evitar problemas en los bordes
 radio=diametro/2;
 centro=dim/2;
 
-tablero_aux=[];
+tablero_aux(1:dim,1:dim)=0.5;
 
-for generacion=1:100
+for generacion=1:500
 vivos=0;
 
     for i=1:dim
@@ -23,9 +26,9 @@ vivos=0;
             elseif ((i-centro)^2)+((j-centro)^2)==(radio^2)
                 %en el borde
                 tablero_aux(i,j)=0;
-            elseif ((i-centro)^2)+((j-centro)^2)>((radio)^2)
+            else
                 %fuera de la esfera mueren automaticamente
-                tablero_aux(i,j)=0.5;
+                %tablero_aux(i,j)=0.5;
                 
             end %if
         end %end for j
