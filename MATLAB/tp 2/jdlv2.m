@@ -14,7 +14,7 @@ centro=dim/2;
 
 tablero_aux(1:dim,1:dim)=0.5;
 
-for generacion=1:500
+for generacion=1:300
 vivos=0;
 
     for i=1:dim
