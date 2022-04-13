@@ -14,18 +14,18 @@ centro=dim/2;
 
 tablero_aux(1:dim,1:dim)=0.5;
 
-for generacion=1:500
+for generacion=1:300
 vivos=0;
 
     for i=1:dim
         for j=1:dim
             if ((i-centro)^2)+((j-centro)^2)<((radio)^2)
                 %adentro del circulo
-                res=check(i,j,tablero);
-                tablero_aux(i,j)=res;
+                tablero_aux(i,j)=check(i,j,tablero);
             elseif ((i-centro)^2)+((j-centro)^2)==(radio^2)
                 %en el borde
-                tablero_aux(i,j)=0;
+                %tablero_aux(i,j)=0;
+                tablero_aux(i,j)=check_borde(i,j,tablero,centro);
             else
                 %fuera de la esfera mueren automaticamente
                 %tablero_aux(i,j)=0.5;
