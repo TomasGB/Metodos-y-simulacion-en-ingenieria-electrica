@@ -6,9 +6,11 @@
 int mostrarMatrizInt(int mat_1[2][11]);
 float mostrarMatrizFloat(float mat_1[11][2]);
 //float mat_mult(float mat_1[2][11], int mat_2[2][11], int res[11][2]);
-int translate(int Fig[2][11], int Tx , int Ty, int TFig[2][11]);
-int scale(int Fig[2][11], float Sx , float Sy, int TFig[2][11]);
-float rotation(int Fig[2][11], int angle,float res[11][2]);
+int translate2D(int Fig[2][11], int Tx , int Ty, int TFig[2][11]);
+int translate3D(int Fig[3][11], int Tx , int Ty, int Tz, int TFig[3][11]);
+int scale2D(int Fig[2][11], float Sx , float Sy, int TFig[2][11]);
+int scale3D(int Fig[3][11], float Sx , float Sy, float Sz, int TFig[3][11]);
+float rotation2D(int Fig[2][11], int angle,float res[11][2]);
 
 int main(){
 
@@ -78,25 +80,41 @@ float mat_mult(float mat_1[2][2], int mat_2[2][11], float res[11][2]){
 
 //============== Transformaciones ======================
 
-int translate(int Fig[2][11], int Tx , int Ty, int TFig[2][11]){
+int translate2D(int Fig[2][11], int Tx , int Ty, int TFig[2][11]){
     for (int i=0;i<11;i++){
         TFig[0][i]=Fig[0][i]+Tx; 
         TFig[1][i]=Fig[1][i]+Ty;
     }
     return TFig[2][11];
 }
-int scale(int Fig[2][11], float Sx , float Sy, int TFig[2][11]){
+int translate3D(int Fig[3][11], int Tx , int Ty, int Tz, int TFig[3][11]){
+    for (int i=0;i<11;i++){
+        TFig[0][i]=Fig[0][i]+Tx; 
+        TFig[1][i]=Fig[1][i]+Ty;
+        TFig[2][i]=Fig[2][i]+Tz;
+    }
+    return TFig[3][11];
+}
+
+int scale2D(int Fig[2][11], float Sx , float Sy, int TFig[2][11]){
     for (int i=0;i<11;i++){
         TFig[0][i]=Fig[0][i]*Sx; 
         TFig[1][i]=Fig[1][i]*Sy;
     }
     return TFig[2][11];
 }
+int scale3D(int Fig[3][11], float Sx , float Sy, float Sz, int TFig[3][11]){
+    for (int i=0;i<11;i++){
+        TFig[0][i]=Fig[0][i]*Sx; 
+        TFig[1][i]=Fig[1][i]*Sy;
+        TFig[2][i]=Fig[2][i]*Sz;
+    }
+    return TFig[3][11];
+}
 
-float rotation(int Fig[2][11], int angle,float result[11][2]){
+float rotation2D(int Fig[2][11], int angle,float result[11][2]){
     float ang_rad=(angle/180)*PI;
     float matrizDeRotacion[2][2]={{cos(ang_rad),-sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
-    
 
     for(int i=0;i<11;i++){
         for(int j=0;j<2;j++){
