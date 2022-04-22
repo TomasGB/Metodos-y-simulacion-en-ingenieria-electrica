@@ -30,11 +30,11 @@ int main(){
     float resultado[11][2];
 
     mostrarMatrizInt(Fig);
-    translate(Fig, Tx , Ty, TFig);
-    scale(TFig, Sx , Sy, TFig);
+    translate2D(Fig, Tx , Ty, TFig);
+    scale2D(TFig, Sx , Sy, TFig);
     printf("\n");
     mostrarMatrizInt(TFig);
-    rotation(TFig, angulo,resultado);
+    rotation2D(TFig, angulo,resultado);
     printf("\n");
     mostrarMatrizFloat(resultado);
 
