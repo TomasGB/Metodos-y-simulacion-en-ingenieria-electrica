@@ -1,7 +1,12 @@
 #include<stdio.h>
 
-int main(void){
+void main(void){
     printf("hello world!\n");
-    return 0;
+
+    int a=3;
+    float b=5.00;
+
+    printf("resultado: %f",(a*b));
+
 }
 
