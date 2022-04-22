@@ -8,8 +8,6 @@ int trig_cos();
 int trig_tan();
 
 int main(void){
-    printf("  |  2|  N| hexa\n");
-    printf(" N|  2|  N| hexa\n");
     printf("-----+-----+ -----\n");
     trig_sin();
     trig_cos();
@@ -22,7 +20,7 @@ float DegToRad(float angle){
     return res;
 }
 int trig_sin(){
-    int theta=45;
+    int theta=0;
     printf("========================\n");
     printf("sin(x)\n");
     for(theta;theta<=90;theta=theta+5){
@@ -32,7 +30,7 @@ int trig_sin(){
     }
 }
 int trig_cos(){
-    int theta=45;
+    int theta=0;
     printf("========================\n");
     printf("cos(x)\n");
     for(theta;theta<=90;theta=theta+5){
@@ -42,7 +40,7 @@ int trig_cos(){
     }
 }
 int trig_tan(){
-    int theta=45;
+    int theta=0;
     printf("========================\n");
     printf("tan(x)\n");
     for(theta;theta<=90;theta=theta+5){
