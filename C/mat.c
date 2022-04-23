@@ -17,31 +17,32 @@ typedef struct{
 
 
 
-void mostrarMatriz2D(tyMatriz3D mat_1);
-void mostrarMatriz3D(tyMatriz2D mat_1);
+void mostrarMatriz2D(tyMatriz2D mat_1);
+void mostrarMatriz3D(tyMatriz3D mat_1);
 
-tyMatriz2D translateMatrix2D(tyMatriz2D Fig, int Tx , int Ty, tyMatriz2D TFig);
+tyMatriz2D translateMatrix2D(tyMatriz2D Fig, float Tx , float Ty, tyMatriz2D TFig);
 tyMatriz2D scaleMatrix2D(tyMatriz2D Fig, float Sx , float Sy, tyMatriz2D TFig);
-tyMatriz3D translateMatrix3D(tyMatriz3D Fig, int Tx , int Ty, int Tz, tyMatriz3D TFig);
+tyMatriz3D translateMatrix3D(tyMatriz3D Fig, float Tx , float Ty, float Tz, tyMatriz3D TFig);
 tyMatriz3D scaleMatrix3D(tyMatriz3D Fig, float Sx , float Sy, float Sz, tyMatriz3D TFig);
 
 
 void main(){
     tyMatriz2D mat_1={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     tyMatriz2D mat_2={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-    mostrarMatrizInt2D(mat_1);
+    mostrarMatriz2D(mat_1);
 
 
     int columnasFig=sizeof(mat_1.x)/sizeof(int); // calcula el numero de columnas
     int filasFig=sizeof(tyMatriz2D)/sizeof(mat_1.x); // calcula el numero de filas
-    printf("%d    %d",filasFig,columnasFig);
+    //printf("%d    %d",filasFig,columnasFig);
     
     float Tx = 5;
     float Ty = -2;
 
 
     translateMatrix2D( mat_1, Tx , Ty, mat_2);
-    mostrarMatrizInt2D(mat_2);
+    printf("\n");
+    mostrarMatriz2D(mat_2);
 }
 
 
@@ -58,7 +59,7 @@ void mostrarMatriz2D(tyMatriz2D mat_1){
     }
     printf("\n");
 }
-void mostrarMatriz2D(tyMatriz3D mat_1){
+void mostrarMatriz3D(tyMatriz3D mat_1){
     for (int i=0;i<11;i++){
         printf("%0.4f ",mat_1.x[i]);
     }
@@ -103,7 +104,7 @@ tyMatriz3D translateMatrix3D(tyMatriz3D Fig, float Tx , float Ty, float Tz, tyMa
     return TFig;
 }
 
-tyMatriz3D scaleMatrix2D(tyMatriz3D Fig, float Sx , float Sy, float Sz, tyMatriz3D TFig){
+tyMatriz3D scaleMatrix3D(tyMatriz3D Fig, float Sx , float Sy, float Sz, tyMatriz3D TFig){
     for (int i=0;i<11;i++){
         TFig.x[i]=Fig.x[i]*Sx; 
         TFig.y[i]=Fig.y[i]*Sy;
