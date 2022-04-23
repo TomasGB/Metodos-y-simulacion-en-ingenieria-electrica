@@ -4,6 +4,7 @@
 #define PI 3.14159265358979323846
 
 float mostrarMatriz(float mat_1[2][11]);
+float transform2D(float Fig[2][11], float Tx , float Ty, float Sx , float Sy, int angle, float TFig[2][11], float res[2][11]);
 float translate2D(float Fig[2][11], float Tx , float Ty, float TFig[2][11]);
 float translate3D(float Fig[3][11], float Tx , float Ty, float Tz, float TFig[3][11]);
 float scale2D(float Fig[2][11], float Sx , float Sy, float TFig[2][11]);
@@ -17,7 +18,7 @@ int main(){
 
     float matrizDeRotacion[2][2]={{cos(ang_rad),-1*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
     float Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
-    float TFig[2][11];
+    float TFig[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
     float res[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
 
     //parametros de transformacion
@@ -28,12 +29,9 @@ int main(){
     float Sy=0.5;
 
     // Transformaciones 2D
-
     mostrarMatriz(Fig);
-    translate2D(Fig, Tx , Ty, TFig);
-    scale2D(TFig, Sx , Sy, TFig);
-    rotation2D(TFig, angulo,res);
     printf("\n");
+    transform2D(Fig, Tx , Ty, Sx , Sy , angulo, TFig, res);
     mostrarMatriz(res);
 
 }
@@ -48,6 +46,13 @@ float mostrarMatriz(float mat_1[2][11]){
     }
 }
 //============== Transformaciones ======================
+
+float transform2D(float Fig[2][11], float Tx , float Ty, float Sx , float Sy, int angle, float TFig[2][11], float res[2][11]){
+    translate2D(Fig, Tx , Ty, TFig);
+    scale2D(TFig, Sx , Sy, TFig);
+    rotation2D(TFig, angle, res);
+    return res[2][11];
+}
 
 float translate2D(float Fig[2][11], float Tx , float Ty, float TFig[2][11]){
     for (int i=0;i<11;i++){

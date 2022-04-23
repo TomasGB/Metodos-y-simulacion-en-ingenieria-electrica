@@ -87,9 +87,3 @@ int LeerDeArchivo(void){
     return 0;
 }
 */
-
-
-//void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot){
-
-
-//    }

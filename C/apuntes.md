@@ -72,6 +72,12 @@ código
       
      - char c1[]={14,28,'@`,'x',124};
 
+    para saber el tamaño del arreglo: 
+    
+    ``
+    (int)sizeof(nombreArreglo)/sizeof(tipoDeDatoDelArreglo)
+    ``
+
 ## Estructuras
 
 ````
@@ -90,7 +96,9 @@ typedef struct{
 
 ````
 
-para acceder a los campos es con ' . '
+para acceder a los campos es con ' . ', y para inicializar la variable es con 
+
+`tyPaciente paciente1={datos};`
 
 ```
 void paciente1(tyPaciente);
