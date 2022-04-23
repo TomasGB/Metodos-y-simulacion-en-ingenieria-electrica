@@ -28,10 +28,10 @@ int main(){
     float res3D[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     //parametros de transformacion
-    int angulo = 0;
+    int angulo = 5;
     int angulo_x= 90;
     int angulo_y = 30;
-    int angulo_z = 15;
+    int angulo_z = 50;
 
     float Tx = 0;
     float Ty = 0;
@@ -147,19 +147,49 @@ float rotation3D(float Fig[3][11], int angle_x, int angle_y, int angle_z,float r
     float ang_rad_Z=(PI/180)*angle_z;
 
     float matrizDeRotacion_X[3][3]={{1,0,0},{0,cos(ang_rad_X),(-1)*sin(ang_rad_X)},{0,sin(ang_rad_X),cos(ang_rad_X)}}; // eje x
-    float matrizDeRotacion_Y[3][3]={{cos(ang_rad_Y),0,sin(ang_rad_Y)},{0,1,0},{sin(ang_rad_Y),cos(ang_rad_Y)}}; // eje y
+    float matrizDeRotacion_Y[3][3]={{cos(ang_rad_Y),0,sin(ang_rad_Y)},{0,1,0},{sin(ang_rad_Y),0,cos(ang_rad_Y)}}; // eje y
     float matrizDeRotacion_Z[3][3]={{cos(ang_rad_Z),(-1)*sin(ang_rad_Z),0},{sin(ang_rad_Z),cos(ang_rad_Z),0},{0,0,1}}; // eje z;
 
+    for(int i_x=0;i_x<3;i_x++){
+        for(int j_x=0;j_x<11;j_x++){
+            res[i_x][j_x]=0;
+            for(int k_x=0;k_x<3;k_x++){
+                res[i_x][j_x]+=matrizDeRotacion_X[i_x][k_x]*Fig[k_x][j_x];
+            }
+        }
+    }
+
+
+    for(int i_y=0;i_y<3;i_y++){
+        for(int j_y=0;j_y<11;j_y++){
+            Fig[i_y][j_y]=0;
+            for(int k_y=0;k_y<3;k_y++){
+                Fig[i_y][j_y]+=matrizDeRotacion_Y[i_y][k_y]*res[k_y][j_y];
+            }
+        }
+    }
+
+    for(int i_z=0;i_z<3;i_z++){
+        for(int j_z=0;j_z<11;j_z++){
+            res[i_z][j_z]=0;
+            for(int k_z=0;k_z<3;k_z++){
+                res[i_z][j_z]+=matrizDeRotacion_Z[i_z][k_z]*Fig[k_z][j_z];
+            }
+        }
+    }
+
+    /*
     for(int i=0;i<3;i++){
         for(int j=0;j<11;j++){
             res[i][j]=0;
             for(int k=0;k<3;k++){
                 res[i][j]+=matrizDeRotacion_X[i][k]*Fig[k][j];
-                res[i][j]+=matrizDeRotacion_Y[i][k]*res[k][j];
-                res[i][j]+=matrizDeRotacion_Z[i][k]*Fig[k][j];
+                //res[i][j]+=matrizDeRotacion_Y[i][k]*res[k][j];
+                //res[i][j]+=matrizDeRotacion_Z[i][k]*res[k][j];
             }
         }
     }
+    */
 
     return res[3][11];
 }
