@@ -3,6 +3,19 @@
 
 #define PI 3.14159265358979323846
 
+typedef struct
+{
+    int x[2];
+    int y[11];
+}tyMatrizInt;
+
+typedef struct
+{
+    float x[2];
+    float y[11];
+}tyMatrizFloat;
+
+
 int mostrarMatrizInt(int mat_1[2][11]);
 float mostrarMatrizFloat(float mat_1[11][2]);
 //float mat_mult(float mat_1[2][11], int mat_2[2][11], int res[11][2]);
@@ -21,7 +34,7 @@ int main(){
     int TFig[2][11],TFig2[2][11];
 
     //parametros de transformacion
-    int angulo = 45;
+    int angulo = 90;
     int Tx =25;
     int Ty= -12;
     float Sx=3;
@@ -30,11 +43,11 @@ int main(){
     float resultado[11][2];
 
     mostrarMatrizInt(Fig);
-    translate2D(Fig, Tx , Ty, TFig);
-    scale2D(TFig, Sx , Sy, TFig);
-    printf("\n");
-    mostrarMatrizInt(TFig);
-    rotation2D(TFig, angulo,resultado);
+    //translate2D(Fig, Tx , Ty, TFig);
+    //scale2D(TFig, Sx , Sy, TFig);
+    //printf("\n");
+    //mostrarMatrizInt(TFig);
+    rotation2D(Fig, angulo,resultado);
     printf("\n");
     mostrarMatrizFloat(resultado);
 
@@ -50,7 +63,17 @@ int mostrarMatrizInt(int mat_1[2][11]){
         printf("\n");
     }
 }
-
+/*
+int mostrarMatrizInt(tyMatrizInt mat_1){
+    for (int i=0;i<2;i++){
+            for (int j=0;j<11;j++){
+                printf(" %d\n ",mat_1.x);
+                printf(" %d\n ",mat_1.y);
+            }
+        printf("\n");
+    }
+}
+*/
 float mostrarMatrizFloat(float mat_1[11][2]){
 
     for (int it_x=0;it_x<2;it_x++){
@@ -115,15 +138,15 @@ int scale3D(int Fig[3][11], float Sx , float Sy, float Sz, int TFig[3][11]){
 float rotation2D(int Fig[2][11], int angle,float result[11][2]){
     float ang_rad=(angle/180)*PI;
     float matrizDeRotacion[2][2]={{cos(ang_rad),-sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
+    float acum=0.00;
 
-    for(int i=0;i<11;i++){
-        for(int j=0;j<2;j++){
-            float acum=0.00;
+    for(int i=0;i<2;i++){
+        for(int j=0;j<11;j++){
             for(int k=0;k<2;k++){
-                acum=acum+(matrizDeRotacion[j][k]*Fig[k][i]);
-                //result[i][j]=result[i][j]+(matrizDeRotacion[i][k]*Fig[k][j]);
+                //acum=acum+(matrizDeRotacion[j][k]*Fig[k][i]);
+                //result[j][i]=acum;
+                result[i][j]=result[i][j]+(matrizDeRotacion[i][k]*Fig[k][j]);
             }
-            result[j][i]=acum;
         }
     }
     return result[11][2];
