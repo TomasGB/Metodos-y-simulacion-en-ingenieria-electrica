@@ -18,7 +18,7 @@ int main(){
 
     float ang_rad=(PI/180)*90;
 
-    float matrizDeRotacion[2][2]={{cos(ang_rad),-1*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
+    //float matrizDeRotacion[2][2]={{cos(ang_rad),-1*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
     float Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     float TFig[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
     float res[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
@@ -158,7 +158,6 @@ float rotation3D(float Fig[3][11], int angle_x, int angle_y, int angle_z,float r
             }
         }
     }
-
 
     for(int i_y=0;i_y<3;i_y++){
         for(int j_y=0;j_y<11;j_y++){

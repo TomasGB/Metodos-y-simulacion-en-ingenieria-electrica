@@ -112,3 +112,19 @@ tyMatriz3D scaleMatrix3D(tyMatriz3D Fig, float Sx , float Sy, float Sz, tyMatriz
     }
     return TFig;
 }
+
+tyMatriz2D rotationMatrix2D(tyMatriz3D Fig, int angle, tyMatriz3D TFig){
+    float ang_rad=(PI/180)*angle;
+    float matrizDeRotacion[2][2]={{cos(ang_rad),(-1)*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
+/*
+    for(int i=0;i<2;i++){
+        for(int j=0;j<11;j++){
+            TFig.x[i],TFig.y[j]=0;
+            for(int k=0;k<2;k++){
+                TFig.x[i],TFig.y[j]+=matrizDeRotacion[i][k]*Fig.x[k][j];
+            }
+        }
+    }
+    return TFig[2][11];
+    */
+}
