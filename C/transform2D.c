@@ -19,71 +19,65 @@ end
 #define PI 3.14159265358979323846
 
 //void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot);
-int GuardarEnArchivo(int arreglo[2][11]);
-int LeerDeArchivo(void);
-float rotation(int Fig[2][11], int angle);
+double GuardarEnArchivo(double arreglo[2][11]);
 
 int main(void){
-    int Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
-    float resultado[2][11];
+    //double Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     int angulo = 45;
+    double Fig[2][11],resultado[2][11];
 
-    printf("===================================\n");
-    printf("Figura original\n\n");
+
+    FILE * fp;
+    fp = fopen("test.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
 
     for (int i=0;i<2;i++){
         for (int j=0;j<11;j++){
-            printf(" %d ",Fig[i][j]);
+            fscanf(fp,"%lf ",&Fig[i][j]);
+        }
+    }
+    fclose(fp);
+
+
+    printf("===================================\n");
+    printf("Figura original\n");
+
+    for (int i=0;i<2;i++){
+        for (int j=0;j<11;j++){
+            printf(" %.4f ",Fig[i][j]);
         }
         printf("\n");
     }
     printf("===================================\n");
-    printf("Figura transformada\n\n");
-    //GuardarEnArchivo(Fig);
+    printf("Figura transformada\n");
 
-    //rotation(Fig, angulo);
+    for (int i=0;i<2;i++){
+        for(int j=0;j<11;j++){
+            printf("%.4f ",resultado[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+    GuardarEnArchivo(resultado);
 
 
 }//end main
 
-int GuardarEnArchivo(int arreglo[2][11]){
+double GuardarEnArchivo(double arreglo[2][11]){
     FILE *fichero;
 
     fichero = fopen( "fig_original2.txt", "w+" );
 
     for( int i = 0; i < 2 ; i++) {
         for( int j= 0; j < 11; j++) {
-            fprintf(fichero, "%d ",arreglo[i][j]);
+            fprintf(fichero, "%.4f ",arreglo[i][j]);
         }
         fprintf(fichero, "\n");
     }
     fclose( fichero );
 }
-
-/*
-int LeerDeArchivo(void){
-     FILE *fichero;
-
-    fichero = fopen( "fig_original2.txt", "r" );
-    int arreglo[2][11];
-    
-    int** mat=malloc(1000000*sizeof(int*)); 
-    for(int it=0;it<1000000;++it){
-        mat[it]=malloc(4*sizeof(int));
-    }
-
-    for( int i = 0; i < 2 ; i++) {
-        for( int j= 0; j < 11; j++) {
-            if (!fscanf(fichero, "%d", &mat[i][j])) 
-                break;
-            printf(" %d ",mat[i][j]);
-            arreglo[i][j]=scanf("%d",mat[i][j]);
-        }
-        printf("\n");
-    }
-    
-    fclose( fichero );
-    printf("%d",arreglo);
-    return 0;
-}
-*/
