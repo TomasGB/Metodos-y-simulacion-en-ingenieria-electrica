@@ -23,7 +23,7 @@ float GuardarEnArchivo(float arreglo[2][11]);
 float rotation(int Fig[2][11], int angle);
 
 int main(void){
-    //float Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
+    //double Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     int angulo = 45;
     double Fig[2][11],resultado[2][11];
 
@@ -38,7 +38,7 @@ int main(void){
 
     for (int i=0;i<2;i++){
         for (int j=0;j<11;j++){
-            fscanf(fp,"%lf ",&resultado[i][j]);
+            fscanf(fp,"%lf ",&Fig[i][j]);
         }
     }
     fclose(fp);
