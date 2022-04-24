@@ -19,8 +19,7 @@ end
 #define PI 3.14159265358979323846
 
 //void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot);
-float GuardarEnArchivo(float arreglo[2][11]);
-float rotation(int Fig[2][11], int angle);
+double GuardarEnArchivo(double arreglo[2][11]);
 
 int main(void){
     //double Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
@@ -66,12 +65,10 @@ int main(void){
 
     GuardarEnArchivo(resultado);
 
-    //rotation(Fig, angulo);
-
 
 }//end main
 
-float GuardarEnArchivo(float arreglo[2][11]){
+double GuardarEnArchivo(double arreglo[2][11]){
     FILE *fichero;
 
     fichero = fopen( "fig_original2.txt", "w+" );
