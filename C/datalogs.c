@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos);
 
 int main(){
 
@@ -43,6 +43,8 @@ for (int i=0;i<1571;i++){
     fscanf(fp,"%lf ",&datos[i]);
 }
 fclose(fp);
+
+//regresionLineal(datos,datos_corregidos,nro_datos);
 
 
 for (int i=0;i<1571;i++){
@@ -129,3 +131,20 @@ printf("\ndesv estandar: %.4f\n",desv);
 
 }//end main
 
+double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos){
+
+    double ordenada;
+
+    for (int i=0;i<nro_datos;i++){
+        ordenada+=datos[i];
+    }
+
+    ordenada=ordenada/nro_datos;
+    printf("\n %f\n",ordenada);
+
+    for(int i=0;i<1571;i++){
+        datos_corregidos[i]=ordenada-datos[i];
+    }
+
+    return datos_corregidos[1571];
+}
