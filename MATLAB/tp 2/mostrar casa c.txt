@@ -1,0 +1,18 @@
+a=dlmread('fig_original.txt');
+b=dlmread('fig_original2.txt');
+hold on
+plot(a(1,:),a(2,:),'-b')
+plot(b(1,:),b(2,:),'-r')
+hold off
+
+======= 3D =========
+
+a=dlmread('fig_original3D.txt');
+b=dlmread('fig_transformada3D.txt');
+hold on
+plot3(a(1,:),a(2,:),a(3,:),'-b')
+plot3(b(1,:),b(2,:),b(3,:),'-r')
+xlabel('Eje x')
+ylabel('Eje y')
+zlabel('Eje z')
+hold off

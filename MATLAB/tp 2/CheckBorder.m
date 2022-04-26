@@ -15,7 +15,7 @@ function H = CheckBorder(i,j,tablero,dim)
             vivos=vivos+1;
         end
         
-        if tablero(i,(dim/2)-abs((dim/2)-j)) == 0
+        if (tablero(i,((dim/2)-dist(j,dim))-1) == 0) || (tablero(i,((dim/2)-dist(j,dim))-1) == 0.5)
         %if tablero(i,j+1) == 0
             vivos=vivos;
         else
@@ -23,14 +23,14 @@ function H = CheckBorder(i,j,tablero,dim)
         end
         
         %if tablero(i-1,j+1) == 0
-        if tablero(i-1,(dim/2)-abs((dim/2)-j)+1) == 0
+        if (tablero(((dim/2)-dist(i,dim))+1,((dim/2)-dist(j,dim))-1) == 0)|| (tablero(((dim/2)-dist(i,dim))+1,((dim/2)-dist(j,dim))-1) == 0.5)
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
         %if tablero(i-1,j) == 0
-        if tablero(i-1,(dim/2)-abs((dim/2)-j)) == 0
+        if (tablero(((dim/2)-dist(i,dim))+1,j) == 0) || (tablero(((dim/2)-dist(i,dim))+1,j) == 0.5)
             vivos=vivos;
         else
             vivos=vivos+1;
@@ -77,21 +77,21 @@ function H = CheckBorder(i,j,tablero,dim)
             vivos=vivos+1;
         end
         
-        if tablero((dim/2)-abs((dim/2)-i)-1,j)==0
+        if (tablero(((dim/2)-dist(i,dim))+1,j)==0) || (tablero(((dim/2)-dist(i,dim))+1,j)== 0.5)
         %if tablero(i-1,j) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero((dim/2)-abs((dim/2)-i)-1,j-1) == 0
+        if (tablero(((dim/2)-dist(i,dim))+1,((dim/2)-dist(j,dim))+1) == 0) || (tablero(((dim/2)-dist(i,dim))+1,((dim/2)-dist(j,dim))+1) == 0.5)
         %if tablero(i-1,j-1) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero(i,(dim/2)-abs((dim/2)-j)-1) == 0
+        if (tablero(i,((dim/2)-dist(j,dim))+1) == 0) || (tablero(i,((dim/2)-dist(j,dim))+1)  == 0.5)
         %if tablero(i,j-1) == 0
             vivos=vivos;
         else
@@ -106,7 +106,7 @@ function H = CheckBorder(i,j,tablero,dim)
     elseif (i<(dim/2))&&(j<(dim/2))
         %3er cuadrante
         
-        if tablero((dim/2)-abs((dim/2)-i)+1,j)==0
+        if (tablero(((dim/2)-dist(i,dim))-1,j)==0) || (tablero(((dim/2)-dist(i,dim))-1,j)== 0.5)
         %if tablero(i+1,j) == 0
             vivos=vivos;
         else
@@ -143,14 +143,14 @@ function H = CheckBorder(i,j,tablero,dim)
             vivos=vivos+1;
         end
         
-        if tablero(i,(dim/2)-abs((dim/2)-j)-1)==0
+        if (tablero(i,((dim/2)-dist(j,dim))+1)==0) || (tablero(i,((dim/2)-dist(j,dim))+1)== 0.5)
         %if tablero(i,j-1) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero((dim/2)-abs((dim/2)-i)+1,(dim/2)-abs((dim/2)-j)-1)==0
+        if (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))+1)==0) || (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))+1)== 0.5)
         %if tablero(i+1,j-1) == 0
             vivos=vivos;
         else
@@ -159,21 +159,21 @@ function H = CheckBorder(i,j,tablero,dim)
     elseif (i>(dim/2))&&(j<(dim/2))
         %4to cuadrante
         
-        if tablero((dim/2)-abs((dim/2)-i)+1,j)==0
+        if (tablero(((dim/2)-dist(i,dim))+1,j)==0) || (tablero(((dim/2)-dist(i,dim))+1,j)== 0.5)
         %if tablero(i+1,j) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero((dim/2)-abs((dim/2)-i)+1,(dim/2)-abs((dim/2)-j)+1)==0
+        if (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))-1)==0) || (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))-1)== 0.5)
         %if tablero(i+1,j+1) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero(i,(dim/2)-abs((dim/2)-j)+1)==0
+        if (tablero(i,((dim/2)-dist(j,dim))-1)==0) || (tablero(i,((dim/2)-dist(j,dim))-1)== 0.5)
         %if tablero(i,j+1) == 0
             vivos=vivos;
         else
@@ -198,14 +198,14 @@ function H = CheckBorder(i,j,tablero,dim)
             vivos=vivos+1;
         end
  
-        if tablero(i,(dim/2)-abs((dim/2)-j)-1)==0
+        if (tablero(i,((dim/2)-dist(j,dim))+1)==0) || (tablero(i,((dim/2)-dist(j,dim))+1)== 0.5)
         %if tablero(i,j-1) == 0
             vivos=vivos;
         else
             vivos=vivos+1;
         end
         
-        if tablero((dim/2)-abs((dim/2)-i)+1,(dim/2)-abs((dim/2)-j)-1)==0
+        if (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))+1)==0) || (tablero(((dim/2)-dist(i,dim))-1,((dim/2)-dist(j,dim))+1)== 0.5)
         %if tablero(i+1,j-1) == 0
             vivos=vivos;
         else

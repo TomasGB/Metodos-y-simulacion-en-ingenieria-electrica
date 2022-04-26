@@ -1,46 +1,46 @@
 function H = CheckInterior(i,j,tablero)
     vivos=0;
     %control de celdas vecinas
-    if tablero(i+1,j) == 0
-        vivos=vivos;
-    else
+    if tablero(i+1,j) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
 
-    if tablero(i+1,j+1) == 0
-        vivos=vivos;
-    else
+    if tablero(i+1,j+1) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i,j+1) == 0
-        vivos=vivos;
-    else
+    if tablero(i,j+1) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i-1,j+1) == 0
-        vivos=vivos;
-    else
+    if tablero(i-1,j+1) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i-1,j) == 0
-        vivos=vivos;
-    else
+    if tablero(i-1,j) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i-1,j-1) == 0
-        vivos=vivos;
-    else
+    if tablero(i-1,j-1) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i,j-1) == 0
-        vivos=vivos;
-    else
+    if tablero(i,j-1) == 1
         vivos=vivos+1;
+    else
+        vivos=vivos;
     end
-    if tablero(i+1,j-1) == 0
-        vivos=vivos;
+    if tablero(i+1,j-1) == 1
+       vivos=vivos+1;
     else
-        vivos=vivos+1;
+        vivos=vivos;
     end
     
     % controla si para la proxima generacion vive o muere

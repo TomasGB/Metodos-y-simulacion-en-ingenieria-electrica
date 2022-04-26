@@ -28,7 +28,7 @@ function T=GameOfLife(tablero,dim,generaciones)
                 elseif ((i-centro)^2)+((j-centro)^2)==(radio^2)
                     %en el borde
                     tablero_aux(i,j)=CheckBorder(i,j,tablero,dim);
-                else
+                elseif ((i-centro)^2)+((j-centro)^2)>(radio^2)
                     %fuera de la esfera mueren automaticamente
                     %tablero_aux(i,j)=0.5;
                 end %if
