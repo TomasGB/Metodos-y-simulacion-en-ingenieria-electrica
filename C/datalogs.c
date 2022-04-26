@@ -3,15 +3,19 @@
 #include <math.h>
 
 
-//int calcularCantidadSenoides(double datos[1571],int pos, int cambios,int senoides);
-//double mostrarFrecuencias(double frecuencias[2][50]);
 
 int main(){
+
+char datalog[9];
+printf("\nIngrese nombre del datalog..\n");
+scanf("%s",datalog);
+
+
 
 //leer datos desde datalog
 
 FILE * fp;
-fp = fopen("datalog1","r");
+fp = fopen(datalog,"r");
 
 if(!fp){
     printf("no se encontro el archivo\n");
@@ -28,9 +32,9 @@ while(!feof(fp))
   }
 }
 fclose(fp);
-printf("cant datos: %d\n",nro_datos);
+printf("\ncant datos: %d\n",nro_datos);
 
-fp = fopen("datalog1","r");
+fp = fopen(datalog,"r");
 
 
 double datos[1571],datos_corregidos[1571],frecuencias[2][50];
@@ -45,11 +49,14 @@ for (int i=0;i<1571;i++){
     datos_corregidos[i]=338.95-datos[i];
 }
 
+/*
 // print datos
 printf(" tiempo| datos |  datos_corregidos|\n");
 for (int i=0; i<40;i++){
     printf("%d | %.4f | %.4f |\n",i,datos[i],datos_corregidos[i]);
 }
+*/
+
 
 // genera tabla de frecuencias
 // cada intervalo dura 5 senoides ideales
@@ -62,8 +69,9 @@ float dur_intervalo=0.1;
 frecuencias[3][10];
 
 
-printf("\nTabla de frecuencias (datalog 1)\n\n");
-printf("intervalo| marca de clase  |  frecuencia \n");
+printf("\nTabla de frecuencias (%s)\n\n",datalog);
+printf("intervalo | marca de clase  |  frecuencia \n");
+printf("======================================== \n");
 
 while (intervalo < 10)
 {
@@ -82,7 +90,7 @@ while (intervalo < 10)
     in=round(frecuencias[0][intervalo]);
     sen=round(frecuencias[2][intervalo]);
 
-    printf("%d        |   %.2f     |        %d\n", in, mc, sen);
+    printf("%d         |   %.2f          |        %d\n", in, mc, sen);
     cambios=0;
     pos=pos+100;
     dur_intervalo=dur_intervalo+(0.1);
@@ -119,30 +127,5 @@ desv=sqrt(var);
 
 printf("\ndesv estandar: %.4f\n",desv);
 
-
 }//end main
 
-
-/*
-int calcularCantidadSenoides(double datos_corregidos[1571],int pos, int cambios,int senoides){
-
-    for (int i=pos;i<pos+20;i++){
-        if( datos_corregidos[i]>=0 && (datos_corregidos[i-1])<0 ){
-            cambios += 1;
-        }
-    }
-    senoides=cambios/2;
-
-    return senoides;
-}
-
-double mostrarFrecuencias(double frecuencias[2][50]){
-    printf("\n");
-    for (int it_x=0;it_x<2;it_x++){
-        for (int it_y=0;it_y<50;it_y++){
-            printf("%d ",frecuencias[it_x][it_y]);
-        }
-        printf("\n");
-    }
-}
-*/
