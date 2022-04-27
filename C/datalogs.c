@@ -104,7 +104,7 @@ printf("\n");
 //calculo promedio y desv estandar
 
 // f_i: frecuencia , x_i: marca de clase, n: cantidad de datos
-//prom= sumatoria((x_i*f_i)/n)
+// prom= sumatoria((x_i*f_i)/n)
 // var = ((sumatoria(x_i-media)^2)*f_i)/n
 // desv = sqrt(var)
 
