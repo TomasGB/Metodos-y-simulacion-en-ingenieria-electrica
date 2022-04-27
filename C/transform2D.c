@@ -20,13 +20,20 @@ end
 
 //void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot);
 double GuardarEnArchivo(double arreglo[2][11]);
+int contarNumeroDeFilas(void);
+int contarNumeroDeColumnas(void);
 
 int main(void){
     //double Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     int angulo = 45;
-    double Fig[2][11],resultado[2][11];
+    int columnas,filas=0;
+    filas=contarNumeroDeFilas();
+    columnas=contarNumeroDeColumnas();
 
+    printf("filas: %d\ncolumnas: %d\n",filas);
+    double Fig[filas][columnas],resultado[filas][columnas];
 
+    /*
     FILE * fp;
     fp = fopen("test.txt","r");
 
@@ -41,6 +48,7 @@ int main(void){
         }
     }
     fclose(fp);
+    */
 
 
     printf("===================================\n");
@@ -80,4 +88,50 @@ double GuardarEnArchivo(double arreglo[2][11]){
         fprintf(fichero, "\n");
     }
     fclose( fichero );
+}
+
+int contarNumeroDeFilas(void){
+    FILE * fp;
+    fp = fopen("fig_original.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int filas,i=0;
+    while(!feof(fp))
+    {
+    i = fgetc(fp);
+    if(i == '\n')
+    {
+        filas++;
+    }
+    }
+    fclose(fp);
+
+    fp = fopen("fig_original.txt","r");
+    return filas;
+
+}
+
+int contarNumeroDeColumnas(void){
+    
+    FILE * fp;
+    fp = fopen("fig_original.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int columnas,i=0;
+
+    while(feof(fp)!='\0'){
+        columnas+=1;
+    }
+    
+    fclose(fp);
+
+    return columnas;
 }

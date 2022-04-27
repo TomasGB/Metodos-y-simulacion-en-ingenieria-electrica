@@ -44,11 +44,13 @@ for (int i=0;i<1571;i++){
 }
 fclose(fp);
 
+
 //regresionLineal(datos,datos_corregidos,nro_datos);
 
 
 for (int i=0;i<1571;i++){
-    datos_corregidos[i]=338.95-datos[i];
+    //datos_corregidos[i]=338.95-datos[i];
+    datos_corregidos[i]=335.14-datos[i];
 }
 
 /*
@@ -68,14 +70,14 @@ int cambios=0;
 int intervalo, in, sen, pos=0; 
 double mc=0;
 float dur_intervalo=0.1;
-frecuencias[3][10];
+frecuencias[3][16];
 
 
 printf("\nTabla de frecuencias (%s)\n\n",datalog);
 printf("intervalo | marca de clase  |  frecuencia \n");
 printf("======================================== \n");
 
-while (intervalo < 10)
+while (intervalo < 16)
 {
 
     for (int i=pos;i<pos+100;i++){
@@ -87,12 +89,12 @@ while (intervalo < 10)
 
     frecuencias[0][intervalo]=intervalo+1;
     frecuencias[1][intervalo]=mc;
-    frecuencias[2][intervalo]=(cambios/2);
+    frecuencias[2][intervalo]=cambios;
 
     in=round(frecuencias[0][intervalo]);
     sen=round(frecuencias[2][intervalo]);
 
-    printf("%d         |   %.2f          |        %d\n", in, mc, sen);
+    printf("%d         |       %.2f      |      %d\n", in, mc, sen);
     cambios=0;
     pos=pos+100;
     dur_intervalo=dur_intervalo+(0.1);
@@ -101,26 +103,31 @@ while (intervalo < 10)
 }
 printf("\n");
 
-//calculo promedio y desv estandar
+/*
+calculo promedio y desv estandar
 
-// f_i: frecuencia , x_i: marca de clase, n: cantidad de datos
-// prom= sumatoria((x_i*f_i)/n)
-// var = ((sumatoria(x_i-media)^2)*f_i)/n
-// desv = sqrt(var)
+f_i: frecuencia
+x_i: marca de clase
+n: cantidad de datos
 
+prom = sumatoria((x_i*f_i)/n)
+var = ((sumatoria(x_i-media)^2)*f_i)/n
+desv = sqrt(var)
 
+*/
 int n =0;
-float desv, var, prom=0;
+float desv, var, prom,prom_htz=0;
 
-for (int i=0;i<10;i++){
+for (int i=0;i<16;i++){
     n=n+frecuencias[2][i];
-    prom=prom+(((frecuencias[1][i]*frecuencias[2][i])));
+    //prom=prom+(((frecuencias[1][i]*frecuencias[2][i])));
 }
-prom=prom/n;
 
-printf("\npromedio: %.4f\n",prom);
+prom_htz=n/(1571*0.001); //0.001 es de ((1/50)/20)
 
-for (int i=0;i<10;i++){
+printf("promedio_hz: %.4f\n",prom_htz);
+
+for (int i=0;i<16;i++){
     var=var+(frecuencias[2][i]*(pow((frecuencias[1][i]-prom),2)));
 }
 var=var/n;

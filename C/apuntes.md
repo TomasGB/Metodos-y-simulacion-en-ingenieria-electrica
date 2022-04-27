@@ -127,3 +127,23 @@ typedef union{
 enum = Dias{Lun = 1, Mar = 2};
 
 ```
+
+## Punteros
+
+C no cuenta con pasaje por referencia, hay que implementarlos manualmente
+
+```
+& - direccion en la memoria de una variable
+
+* - contenido de un espacio en la memoria (apuntado)
+
+```
+
+char *pC es la direccion de memoria del char, pC es la variable
+
+pC = &C devuelve la direccion de memoria
+
+con *pC=0, asigno 0
+
+
+el nombre de un arreglo es un puntero a la primera celda
