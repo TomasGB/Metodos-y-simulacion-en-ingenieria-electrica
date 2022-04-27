@@ -39,17 +39,20 @@ fp = fopen(datalog,"r");
 
 double datos[1571],datos_corregidos[1571],frecuencias[2][50];
 
+
 for (int i=0;i<1571;i++){
     fscanf(fp,"%lf ",&datos[i]);
 }
 fclose(fp);
 
-//regresionLineal(datos,datos_corregidos,nro_datos);
+regresionLineal(datos,datos_corregidos,nro_datos);
 
 
 for (int i=0;i<1571;i++){
-    datos_corregidos[i]=338.95-datos[i];
+    //datos_corregidos[i]=338.95-datos[i];
+    datos_corregidos[i]=335.14-datos[i];
 }
+
 
 /*
 // print datos
@@ -87,7 +90,7 @@ while (intervalo < 10)
 
     frecuencias[0][intervalo]=intervalo+1;
     frecuencias[1][intervalo]=mc;
-    frecuencias[2][intervalo]=(cambios/2);
+    frecuencias[2][intervalo]=(cambios);
 
     in=round(frecuencias[0][intervalo]);
     sen=round(frecuencias[2][intervalo]);
