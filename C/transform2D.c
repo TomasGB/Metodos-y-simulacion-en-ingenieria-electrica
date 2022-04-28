@@ -50,7 +50,6 @@ int main(void){
     fclose(fp);
     */
 
-
     printf("===================================\n");
     printf("Figura original\n");
 
