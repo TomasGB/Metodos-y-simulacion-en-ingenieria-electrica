@@ -39,6 +39,7 @@ fp = fopen(datalog,"r");
 
 double datos[1571],datos_corregidos[1571],frecuencias[2][50];
 
+
 for (int i=0;i<1571;i++){
     fscanf(fp,"%lf ",&datos[i]);
 }
@@ -52,6 +53,7 @@ for (int i=0;i<1571;i++){
     //datos_corregidos[i]=338.95-datos[i];
     datos_corregidos[i]=335.14-datos[i];
 }
+
 
 /*
 // print datos
