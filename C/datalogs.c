@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 
-double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos);
+//double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos);
 
 int main(){
 
 char datalog[9];
 printf("\nIngrese nombre del datalog..\n");
 scanf("%s",datalog);
-
 
 
 //leer datos desde datalog
@@ -22,7 +21,9 @@ if(!fp){
     exit(101);
 }
 
-int nro_datos,i=0;
+int nro_datos,cantidad_intervalos,i=0;
+
+
 while(!feof(fp))
 {
   i = fgetc(fp);
@@ -34,26 +35,35 @@ while(!feof(fp))
 fclose(fp);
 printf("\ncant datos: %d\n",nro_datos);
 
+cantidad_intervalos=(int)ceil(((nro_datos*0.001)/0.1));
+
+printf("\ncant intervalos: %d\n",cantidad_intervalos);
+
 fp = fopen(datalog,"r");
 
 
-double datos[1571],datos_corregidos[1571],frecuencias[2][50];
+double datos[1571],datos_corregidos[1571],frecuencias[2][16];
 
 
-for (int i=0;i<1571;i++){
+for (int i=0;i<nro_datos;i++){
     fscanf(fp,"%lf ",&datos[i]);
 }
 fclose(fp);
 
 
-//regresionLineal(datos,datos_corregidos,nro_datos);
+//regresionLineal
+float ordenada;
 
-
-for (int i=0;i<1571;i++){
-    //datos_corregidos[i]=338.95-datos[i];
-    datos_corregidos[i]=335.14-datos[i];
+for (int i=0;i<nro_datos;i++){
+    ordenada+=datos[i];
 }
 
+ordenada=ordenada/nro_datos;
+printf("\nordenada: %.4f\n",ordenada);
+
+for(int i=0;i<nro_datos;i++){
+    datos_corregidos[i]=ordenada-datos[i];
+}
 
 /*
 // print datos
@@ -65,7 +75,7 @@ for (int i=0; i<40;i++){
 
 
 // genera tabla de frecuencias
-// cada intervalo dura 5 senoides ideales
+// cada intervalo dura el tiempo de 5 senoides ideales
 
 
 int cambios=0;
@@ -79,7 +89,7 @@ printf("\nTabla de frecuencias (%s)\n\n",datalog);
 printf("intervalo | marca de clase  |  frecuencia \n");
 printf("======================================== \n");
 
-while (intervalo < 16)
+while (intervalo < cantidad_intervalos)
 {
 
     for (int i=pos;i<pos+100;i++){
@@ -105,34 +115,30 @@ while (intervalo < 16)
 }
 printf("\n");
 
-/*
-calculo promedio y desv estandar
 
-f_i: frecuencia
-x_i: marca de clase
-n: cantidad de datos
+//calculo promedio y desv estandar
 
-prom = sumatoria((x_i*f_i)/n)
-var = ((sumatoria(x_i-media)^2)*f_i)/n
-desv = sqrt(var)
 
-*/
-int n =0;
-float desv, var, prom,prom_htz=0;
+int prom =0;
+float desv, var,prom_htz,prom_ciclos=0;
 
-for (int i=0;i<16;i++){
-    n=n+frecuencias[2][i];
+for (int i=0;i<cantidad_intervalos;i++){
+    prom=prom+frecuencias[2][i];
+    prom_ciclos=prom_ciclos+frecuencias[2][i];
     //prom=prom+(((frecuencias[1][i]*frecuencias[2][i])));
 }
+prom_ciclos=prom_ciclos/cantidad_intervalos; //16 intervalos
+prom_htz=prom/(nro_datos*0.001); //0.001 es de ((1/50)/20)
 
-prom_htz=n/(1571*0.001); //0.001 es de ((1/50)/20)
+printf("promedio ciclos completos por intevalo: %.4f\n",prom_ciclos);
+printf("\nfrecuencia promedio: %.4f\n",prom_htz);
 
-printf("promedio_hz: %.4f\n",prom_htz);
 
-for (int i=0;i<16;i++){
-    var=var+(frecuencias[2][i]*(pow((frecuencias[1][i]-prom),2)));
+for (int i=0;i<cantidad_intervalos;i++){
+    var=var+pow((frecuencias[2][i]-prom_ciclos),2);
 }
-var=var/n;
+
+var=var/cantidad_intervalos;
 desv=sqrt(var);
 
 
@@ -140,6 +146,8 @@ printf("\ndesv estandar: %.4f\n",desv);
 
 }//end main
 
+
+/*
 double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos){
 
     double ordenada;
@@ -157,3 +165,4 @@ double regresionLineal(double datos[1571], double datos_corregidos[1571], int nr
 
     return datos_corregidos[1571];
 }
+*/
