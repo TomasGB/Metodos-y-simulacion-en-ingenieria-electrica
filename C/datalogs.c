@@ -125,9 +125,8 @@ float desv, var,prom_htz,prom_ciclos=0;
 for (int i=0;i<cantidad_intervalos;i++){
     prom=prom+frecuencias[2][i];
     prom_ciclos=prom_ciclos+frecuencias[2][i];
-    //prom=prom+(((frecuencias[1][i]*frecuencias[2][i])));
 }
-prom_ciclos=prom_ciclos/cantidad_intervalos; //16 intervalos
+prom_ciclos=prom_ciclos/cantidad_intervalos;
 prom_htz=prom/(nro_datos*0.001); //0.001 es de ((1/50)/20)
 
 printf("promedio ciclos completos por intevalo: %.4f\n",prom_ciclos);
