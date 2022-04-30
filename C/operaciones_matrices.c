@@ -1,77 +1,119 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #define PI 3.14159265358979323846
 
-double mostrarMatriz(double mat_1[2][11]);
-double mostrarMatriz3D(double mat_1[3][11]);
-double transform2D(double Fig[2][11], float Tx , float Ty, float Sx , float Sy, int angle, double TFig[2][11], double res[2][11]);
-double transform3D(double Fig3D[3][11], float Tx , float Ty, float Tz, float Sx , float Sy, float Sz, int angle_x, int angle_y, int angle_z, double TFig3D[3][11], double res3D[3][11]);
-double translate2D(double Fig[2][11], float Tx , float Ty, double TFig[2][11]);
-double translate3D(double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]);
-double scale2D(double Fig[2][11], float Sx , float Sy, double TFig[2][11]);
-double scale3D(double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]);
-double rotation2D(double Fig[2][11], int angle,double res[2][11]);
-double rotation3D(double Fig[3][11], int angle_x, int angle_y, int angle_z,double res[3][11]);
+
+typedef struct {
+    char operacion;
+    double parametros[3];
+}instruccion;
+
+double mostrarMatriz(int dimensiones, double mat_1[3][11]);
+double transform(int dimensiones, double Fig3D[3][11],char operacion, double parametros[3], double res[3][11]);
+double translate(int dimensiones, double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]);
+double scale(int dimensiones,double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]);
+double rotation2D(double Fig[3][11], float angle,double res[3][11]);
+double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double res[3][11]);
+
+//double transform2(int filas, double Fig3D[3][11], float Tx , float Ty, float Tz, float Sx , float Sy, float Sz, int angle_x, int angle_y, int angle_z, double TFig3D[3][11], double res3D[3][11]);
+//int contarNumeroDeColumnas(void);
+int contarNumeroDeDimensiones(void);
+double cargarMatriz(int dimensiones, double matriz[3][11]);
+void GuardarEnArchivo(int dimensiones,double arreglo[3][11]);
+instruccion readTransformations(instruccion transformaciones);
 
 int main(){
 
-    float ang_rad=(PI/180)*90;
+    //float ang_rad=(PI/180)*90;
 
-    double matrizDeRotacion[2][2]={{cos(ang_rad),-1*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
-    double Fig[2][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
-    double TFig[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
-    double res[2][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0}};
+    int dimensiones=contarNumeroDeDimensiones();
+    double Fig3D[3][11];
 
-    double Fig3D[3][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    Fig3D[3][11]=cargarMatriz(dimensiones,Fig3D);
     double TFig3D[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-    double res3D[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    //double res3D[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
+    //double Fig3D[3][11]={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    /*
     //parametros de transformacion
-    int angulo = 5;
-    int angulo_x= 90;
-    int angulo_y = 30;
-    int angulo_z = 50;
+    int angulo = 0;
+    int angulo_x= 0;
+    int angulo_y = 0;
+    int angulo_z = 0;
 
     float Tx = 0;
     float Ty = 0;
-    float Tz = 0;
+    float Tz = 1;
 
     float Sx = 1;
     float Sy = 1;
     float Sz = 1;
+    */
 
+   // Transformaciones 3D
+    printf("Dimensiones: %d\n",dimensiones);
+    printf("\n");
+    printf("Figura original:\n");
+    mostrarMatriz(dimensiones,Fig3D);
 
-    // Transformaciones 2D
-    printf("Figura original 2D:\n");
-    mostrarMatriz(Fig);
+    //lee instrucciones del archivo
+    char operacion;
+    double parametros[3];
+
+    FILE * fp;
+    fp = fopen("transformaciones.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int jk=0;
+    int it=0;
+    char a;
+    while(!feof(fp))
+    {
+        if(jk<1){
+            operacion=fgetc(fp);
+            jk++;
+        }
+        fscanf(fp,"%lf",&parametros[it]);
+
+        it++;
+
+        if(it==3 && operacion!='r'){
+            transform(dimensiones, Fig3D,operacion,parametros,Fig3D);
+            Fig3D[3][11]=Fig3D[3][11];
+            it=0;
+            jk=0;
+        }
+        if(it==3 && operacion=='r'){
+            transform(dimensiones, Fig3D,operacion,parametros,TFig3D);
+            Fig3D[3][11]=TFig3D[3][11];
+            it=0;
+            jk=0;
+        }
+
+    }
+
+    fclose(fp);
+
     printf("\n");
-    printf("Figura transformada 2D:\n");
-    transform2D(Fig, Tx , Ty, Sx , Sy , angulo, TFig, res);
-    mostrarMatriz(res);
-    printf("\n");
-    // Transformaciones 3D
-    printf("\n");
-    printf("Figura original 3D:\n");
-    mostrarMatriz3D(Fig3D);
-    printf("\n");
-    printf("Figura transformada 3D:\n");
-    transform3D(Fig3D, Tx , Ty, Tz, Sx , Sy, Sz, angulo_x, angulo_y, angulo_z, TFig3D, res3D);
-    mostrarMatriz3D(res3D);
+    printf("Figura transformada:\n");
+
+    mostrarMatriz(dimensiones,Fig3D);
+
+    GuardarEnArchivo(dimensiones,Fig3D);
+    
 
 }
 
 //========= Print Matrices ==========================
-double mostrarMatriz(double mat_1[2][11]){
-    for (int it_x=0;it_x<2;it_x++){
-        for (int it_y=0;it_y<11;it_y++){
-            printf("%0.4f ",mat_1[it_x][it_y]);
-        }
-        printf("\n");
-    }
-}
-double mostrarMatriz3D(double mat_1[3][11]){
-    for (int it_x=0;it_x<3;it_x++){
+
+double mostrarMatriz(int dimensiones, double mat_1[3][11]){
+    for (int it_x=0;it_x<dimensiones;it_x++){
         for (int it_y=0;it_y<11;it_y++){
             printf("%0.4f ",mat_1[it_x][it_y]);
         }
@@ -80,53 +122,72 @@ double mostrarMatriz3D(double mat_1[3][11]){
 }
 //============== Transformaciones ======================
 
-double transform2D(double Fig[2][11], float Tx , float Ty, float Sx , float Sy, int angle, double TFig[2][11], double res[2][11]){
-    translate2D(Fig, Tx , Ty, TFig);
-    scale2D(TFig, Sx , Sy, TFig);
-    rotation2D(TFig, angle, res);
-    return res[2][11];
+double transform(int dimensiones, double Fig3D[3][11],char operacion, double parametros[3], double res[3][11]){
+
+    switch (operacion){
+        case 't':
+            if(dimensiones==3){
+                translate(dimensiones,Fig3D,parametros[0],parametros[1],parametros[2], res);
+            }else if(dimensiones==2){
+                translate(dimensiones,Fig3D,parametros[0],parametros[1],0,res);
+            }
+        break;
+
+        case 's':
+        if(dimensiones==3){
+                scale(dimensiones,Fig3D,parametros[0],parametros[1],parametros[2], res);
+            }else if(dimensiones==2){
+                scale(dimensiones,Fig3D,parametros[0],parametros[1],0, res);
+            }
+        break;
+        case 'r':
+        if(dimensiones==3){
+                rotation3D(Fig3D,parametros[0],parametros[1],parametros[2],res);
+            }else if(dimensiones==2){
+                rotation2D(Fig3D,parametros[2],res);
+            }
+        break;
+    }
 }
-double transform3D(double Fig3D[3][11], float Tx , float Ty, float Tz, float Sx , float Sy, float Sz, int angle_x, int angle_y, int angle_z, double TFig3D[3][11], double res3D[3][11]){
-    translate3D(Fig3D, Tx , Ty, Tz, TFig3D);
-    scale3D(TFig3D, Sx , Sy, Sz, TFig3D);
-    rotation3D(TFig3D, angle_x,angle_y,angle_z, res3D);
+
+double transform2(int dimensiones, double Fig3D[3][11], float Tx , float Ty, float Tz, float Sx , float Sy, float Sz, int angle_x, int angle_y, int angle_z, double TFig3D[3][11], double res3D[3][11]){
+    translate(dimensiones, Fig3D, Tx , Ty, Tz, TFig3D);
+    scale(dimensiones, TFig3D, Sx , Sy, Sz, TFig3D);
+
+    if (dimensiones==2){
+        rotation2D(TFig3D, angle_z, res3D);
+    }else{
+        rotation3D(TFig3D, angle_x,angle_y,angle_z, res3D);
+    }
     return res3D[3][11];
 }
-
-double translate2D(double Fig[2][11], float Tx , float Ty, double TFig[2][11]){
+double translate(int dimensiones, double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]){
     for (int i=0;i<11;i++){
         TFig[0][i]=Fig[0][i]+Tx; 
         TFig[1][i]=Fig[1][i]+Ty;
+
+        if(dimensiones==2){
+            }else{
+            TFig[2][i]=Fig[2][i]+Tz;
+        }
     }
-    return TFig[2][11];
+    return TFig[3][11];
 }
-
-double translate3D(double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]){
+double scale(int dimensiones,double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]){
     for (int i=0;i<11;i++){
-        TFig[0][i]=Fig[0][i]+Tx; 
-        TFig[1][i]=Fig[1][i]+Ty;
-        TFig[2][i]=Fig[2][i]+Tz;
+        TFig[0][i]=Fig[0][i]*Sx; 
+        TFig[1][i]=Fig[1][i]*Sy;
+
+        if(dimensiones==2){
+
+        }else{
+            TFig[2][i]=Fig[2][i]*Sz;
+        }
     }
     return TFig[3][11];
 }
 
-double scale2D(double Fig[2][11], float Sx , float Sy, double TFig[2][11]){
-    for (int i=0;i<11;i++){
-        TFig[0][i]=Fig[0][i]*Sx; 
-        TFig[1][i]=Fig[1][i]*Sy;
-    }
-    return TFig[2][11];
-}
-double scale3D(double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]){
-    for (int i=0;i<11;i++){
-        TFig[0][i]=Fig[0][i]*Sx; 
-        TFig[1][i]=Fig[1][i]*Sy;
-        TFig[2][i]=Fig[2][i]*Sz;
-    }
-    return TFig[3][11];
-}
-
-double rotation2D(double Fig[2][11], int angle,double res[2][11]){
+double rotation2D(double Fig[3][11], float angle,double res[3][11]){
     float ang_rad=(PI/180)*angle;
     double matrizDeRotacion[2][2]={{cos(ang_rad),(-1)*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
 
@@ -138,10 +199,14 @@ double rotation2D(double Fig[2][11], int angle,double res[2][11]){
             }
         }
     }
-    return res[2][11];
+
+    for(int i=0;i<11;i++){
+        res[2][i]=0;
+    }
+    return res[3][11];
 }
 
-double rotation3D(double Fig[3][11], int angle_x, int angle_y, int angle_z,double res[3][11]){
+double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double res[3][11]){
     
     float ang_rad_X=(PI/180)*angle_x;
     float ang_rad_Y=(PI/180)*angle_y;
@@ -180,3 +245,131 @@ double rotation3D(double Fig[3][11], int angle_x, int angle_y, int angle_z,doubl
 
     return res[3][11];
 }
+
+//========================= Archivos =====================================================
+
+int contarNumeroDeDimensiones(void){
+    FILE * fp;
+    fp = fopen("fig_original3D.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int filas,i=0;
+    while(!feof(fp))
+    {
+    i = fgetc(fp);
+    if(i == '\n')
+    {
+        filas++;
+    }
+    }
+    fclose(fp);
+    filas+=1; 
+
+    return filas;
+
+}
+/*
+int contarNumeroDeColumnas(void){
+    
+    FILE * fp;
+    fp = fopen("fig_original.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int columnas,i=0;
+
+    while(feof(fp)!='\0'){
+        columnas+=1;
+    }
+    
+    fclose(fp);
+
+    return columnas;
+}
+*/
+
+double cargarMatriz(int dimensiones, double matriz[3][11]){
+    FILE * fp;
+    fp = fopen("fig_original3D.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    for (int i=0;i<dimensiones;i++){
+        for (int j=0;j<11;j++){
+            fscanf(fp,"%lf ",&matriz[i][j]);
+        }
+    }
+    if(dimensiones==2){
+        for (int j=0;j<11;j++){
+            matriz[2][j]=0;
+        }
+    }
+    fclose(fp);
+
+    return matriz[3][11];
+
+}
+
+void GuardarEnArchivo(int dimensiones,double arreglo[3][11]){
+    FILE *fp;
+
+    fp = fopen( "test.txt", "w+" );
+
+    for( int i = 0; i < dimensiones ; i++) {
+        for( int j= 0; j < 11; j++) {
+            fprintf(fp, "%.4f ",arreglo[i][j]);
+        }
+        fprintf(fp, "\n");
+    }
+    fclose( fp );
+}
+
+
+
+/*
+ void readTransformations(void){
+        ejemplo de instruccion:
+
+        transformacion, eje x, eje y, eje z
+
+        traslacion: t , escalado: s, rotacion: r
+
+        t,15,-2,6 ----> traslada 15 unidades en x, -2 en y, 6 en z
+        r,5,0,45 ----> rota 5° en x, 0° en y, 45° en z
+
+
+
+    FILE * fp;
+    fp = fopen("transformaciones.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int jk=0;
+    int it=0;
+    char a;
+    while(!feof(fp))
+    {
+        if(jk<1){
+            operacion=fgetc(fp);
+            jk++;
+        }
+        fscanf(fp,"%lf",&parametros[it]);
+
+        it++;
+
+    }
+}
+*/
