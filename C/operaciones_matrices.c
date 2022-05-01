@@ -29,16 +29,16 @@ int main(){
 
     //parametros de transformacion
     int angulo = 5;
-    int angulo_x= 90;
+    int angulo_x= 45;
     int angulo_y = 30;
     int angulo_z = 50;
 
-    float Tx = 0;
+    float Tx = 15;
     float Ty = 0;
-    float Tz = 0;
+    float Tz = -2;
 
-    float Sx = 1;
-    float Sy = 1;
+    float Sx = 0.5;
+    float Sy = 0.2;
     float Sz = 1;
 
 
