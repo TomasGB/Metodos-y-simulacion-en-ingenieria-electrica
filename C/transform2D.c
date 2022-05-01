@@ -5,7 +5,7 @@
 #define PI 3.14159265358979323846
 
 //void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot);
-double GuardarEnArchivo(double arreglo[2][11]);
+void GuardarEnArchivo(double arreglo[2][11]);
 int contarNumeroDeFilas(void);
 int contarNumeroDeColumnas(void);
 
@@ -16,10 +16,11 @@ int main(void){
     filas=contarNumeroDeFilas();
     columnas=contarNumeroDeColumnas();
 
-    printf("filas: %d\ncolumnas: %d\n",filas,columnas);
-    double Fig[filas][columnas],resultado[filas][columnas];
+    printf("filas: %d\ncolumnas: %d\n",filas);
+    double Fig[2][11],resultado[2][11];
 
-    /*
+
+
     FILE * fp;
     fp = fopen("test.txt","r");
 
@@ -34,7 +35,7 @@ int main(void){
         }
     }
     fclose(fp);
-    */
+
 
     printf("===================================\n");
     printf("Figura original\n");
@@ -61,7 +62,8 @@ int main(void){
 
 }//end main
 
-double GuardarEnArchivo(double arreglo[2][11]){
+
+void GuardarEnArchivo(double arreglo[2][11]){
     FILE *fichero;
 
     fichero = fopen( "fig_original2.txt", "w+" );
