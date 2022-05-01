@@ -29,21 +29,6 @@ int main(){
     printf("Figura original:\n");
     showMatrix(dimensiones,Fig);
 
-<<<<<<< HEAD
-    //parametros de transformacion
-    int angulo = 5;
-    int angulo_x= 45;
-    int angulo_y = 30;
-    int angulo_z = 50;
-
-    float Tx = 15;
-    float Ty = 0;
-    float Tz = -2;
-
-    float Sx = 0.5;
-    float Sy = 0.2;
-    float Sz = 1;
-=======
     //lee instrucciones del archivo
     char operacion;
     double parametros[3];
@@ -55,7 +40,6 @@ int main(){
         printf("no se encontro el archivo\n");
         exit(101);
     }
->>>>>>> 8c5d3db6828cefd9fad85147377396f39baf9042
 
     int jk=0;
     int it=0;

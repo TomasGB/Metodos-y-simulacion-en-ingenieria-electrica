@@ -1,17 +1,3 @@
-/*
-function B = tl(A, Tx, Ty, Sx, Sy, Rot)
-	% transformación lineal del punto A: translación (Tx, Ty), escala (Sx, Sy), rotación en (Rot) grados.
-	% gck, 2004
-
-  T = [Tx; Ty];
-  S = [Sx 0; 0 Sy];
-  alfa = Rot*pi/180;
-  R = [cos(alfa) -sin(alfa); sin(alfa) cos(alfa)];
-
-  B = T + R * S * A;
-end
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -30,7 +16,7 @@ int main(void){
     filas=contarNumeroDeFilas();
     columnas=contarNumeroDeColumnas();
 
-    printf("filas: %d\ncolumnas: %d\n",filas);
+    printf("filas: %d\ncolumnas: %d\n",filas,columnas);
     double Fig[filas][columnas],resultado[filas][columnas];
 
     /*
@@ -89,6 +75,10 @@ double GuardarEnArchivo(double arreglo[2][11]){
     fclose( fichero );
 }
 
+double LeerDeArchivo(void){
+    
+}
+
 int contarNumeroDeFilas(void){
     FILE * fp;
     fp = fopen("fig_original.txt","r");
@@ -126,10 +116,15 @@ int contarNumeroDeColumnas(void){
 
     int columnas,i=0;
 
-    while(feof(fp)!='\0'){
-        columnas+=1;
+    while(!feof(fp) && fgetc(fp)!='\n'){
+        if (fgetc(fp)=='-'||fgetc(fp)==' '||fgetc(fp)=='\0'){
+            
+        }else{
+            columnas+=1;
+        }
     }
-    
+    columnas++;
+
     fclose(fp);
 
     return columnas;
