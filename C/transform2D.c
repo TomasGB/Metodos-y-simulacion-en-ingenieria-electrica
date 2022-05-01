@@ -1,17 +1,3 @@
-/*
-function B = tl(A, Tx, Ty, Sx, Sy, Rot)
-	% transformación lineal del punto A: translación (Tx, Ty), escala (Sx, Sy), rotación en (Rot) grados.
-	% gck, 2004
-
-  T = [Tx; Ty];
-  S = [Sx 0; 0 Sy];
-  alfa = Rot*pi/180;
-  R = [cos(alfa) -sin(alfa); sin(alfa) cos(alfa)];
-
-  B = T + R * S * A;
-end
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -19,7 +5,7 @@ end
 #define PI 3.14159265358979323846
 
 //void transform2D(int A, int Tx, int Ty, int Sx, int Sy, int Rot);
-double GuardarEnArchivo(double arreglo[2][11]);
+void GuardarEnArchivo(double arreglo[2][11]);
 int contarNumeroDeFilas(void);
 int contarNumeroDeColumnas(void);
 
@@ -31,9 +17,10 @@ int main(void){
     columnas=contarNumeroDeColumnas();
 
     printf("filas: %d\ncolumnas: %d\n",filas);
-    double Fig[filas][columnas],resultado[filas][columnas];
+    double Fig[2][11],resultado[2][11];
 
-    /*
+
+
     FILE * fp;
     fp = fopen("test.txt","r");
 
@@ -48,7 +35,7 @@ int main(void){
         }
     }
     fclose(fp);
-    */
+
 
     printf("===================================\n");
     printf("Figura original\n");
@@ -75,7 +62,8 @@ int main(void){
 
 }//end main
 
-double GuardarEnArchivo(double arreglo[2][11]){
+
+void GuardarEnArchivo(double arreglo[2][11]){
     FILE *fichero;
 
     fichero = fopen( "fig_original2.txt", "w+" );
