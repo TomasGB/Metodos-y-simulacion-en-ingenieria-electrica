@@ -42,7 +42,7 @@ printf("\ncant intervalos: %d\n",cantidad_intervalos);
 fp = fopen(datalog,"r");
 
 
-double datos[1571],datos_corregidos[1571],frecuencias[2][16];
+double datos[1571],datos_corregidos[1571],frecuencias[5][16];
 
 
 for (int i=0;i<nro_datos;i++){
@@ -75,13 +75,14 @@ for (int i=0; i<40;i++){
 
 
 // genera tabla de frecuencias
+
 int cambios=0;
 int intervalo, in, sen, pos=0; 
-double mc=0;
+double mc,frec_int,RMS_int=0;
 float dur_intervalo=0.1;
-frecuencias[3][16];
+
 /*
-    duracion de un intervalo: 0.1 (5 senoides ideales)
+    duracion de un intervalo: 0.1 seg (5 senoides ideales)
     frecuencias[0][]=numero de intervalo
     frecuencias[1][]=marca de clase del intervalo
     frecuencias[2][]=ciclos completos de la señal del datalog cumplidos en ese intervalo
@@ -90,17 +91,25 @@ frecuencias[3][16];
 
 
 printf("\nTabla de frecuencias (%s)\n\n",datalog);
-printf("intervalo | marca de clase  |  frecuencia \n");
-printf("======================================== \n");
+printf("intervalo | marca de clase  |    ciclos completos    |   frecuencia del intervalo  |  RMS del intervalo  |\n");
+printf("==========================================================================================================\n");
 
 while (intervalo < cantidad_intervalos)
 {
+    RMS_int=0;
 
     for (int i=pos;i<pos+100;i++){
+        //calcula los ciclos completos
         if( datos_corregidos[i]>=0 && (datos_corregidos[i-1])<0 ){
             cambios += 1;
         }
+        // busca el pico del intervalo
+        if(datos_corregidos[i]>RMS_int){
+            RMS_int=datos_corregidos[i];
+        }
     }
+    RMS_int=RMS_int/sqrt(2);
+    
     mc=((dur_intervalo-0.1)+dur_intervalo)/2;
 
     frecuencias[0][intervalo]=intervalo+1;
@@ -109,19 +118,24 @@ while (intervalo < cantidad_intervalos)
 
     in=round(frecuencias[0][intervalo]);
     sen=round(frecuencias[2][intervalo]);
+    frec_int=(sen)/(100*0.001);
+    frecuencias[3][intervalo]=frec_int;
+    frecuencias[4][intervalo]=RMS_int;
 
-    printf("%d         |       %.2f      |      %d\n", in, mc, sen);
+    printf("    %d     |       %.2f      |           %d            |            %.2f            |       %.2f        |\n", in, mc, sen,frec_int,RMS_int);
     cambios=0;
     pos=pos+100;
     dur_intervalo=dur_intervalo+(0.1);
+    RMS_int=0;
     intervalo++;
 
 }
-printf("======================================== \n");
+printf("==========================================================================================================\n");
 printf("\n");
 
 
 //calculo promedio y desv estandar
+
 int prom =0;
 float desv, var,prom_htz,prom_ciclos=0;
 
@@ -144,9 +158,9 @@ var=var/cantidad_intervalos;
 desv=sqrt(var);
 
 
-printf("\ndesv estandar: %.4f\n",desv);
+printf("\ndesv estandar: %.4f\n\n",desv);
 
-printf("\n===============================");
+printf("==========================================================================================================\n");
 
 //calculo de valor eficaz
 
@@ -165,9 +179,6 @@ printf("\npico: %.4f\namplitud: %.4f\n",pico, amplitud);
 RMS=amplitud/sqrt(2);
 
 printf("RMS: %.4f\n",RMS);
-
-
-
 
 
 
