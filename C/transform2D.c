@@ -77,6 +77,10 @@ void GuardarEnArchivo(double arreglo[2][11]){
     fclose( fichero );
 }
 
+double LeerDeArchivo(void){
+    
+}
+
 int contarNumeroDeFilas(void){
     FILE * fp;
     fp = fopen("fig_original.txt","r");
@@ -114,10 +118,15 @@ int contarNumeroDeColumnas(void){
 
     int columnas,i=0;
 
-    while(feof(fp)!='\0'){
-        columnas+=1;
+    while(!feof(fp) && fgetc(fp)!='\n'){
+        if (fgetc(fp)=='-'||fgetc(fp)==' '||fgetc(fp)=='\0'){
+            
+        }else{
+            columnas+=1;
+        }
     }
-    
+    columnas++;
+
     fclose(fp);
 
     return columnas;

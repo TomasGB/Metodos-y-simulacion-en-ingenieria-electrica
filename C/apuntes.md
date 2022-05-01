@@ -147,3 +147,33 @@ con *pC=0, asigno 0
 
 
 el nombre de un arreglo es un puntero a la primera celda
+
+
+## punteros con arreglos
+
+````
+void f1(float A[], int N);  o  void f1(float *A, int N);
+
+f1(A,500);
+
+````
+
+## memoria lejana
+
+'stdlib.h' 'alloc.h' 'malloc.h'
+
+void *calloc(int N, int B) // N celdas de B bytes
+void *malloc(unsigned long B) // B bytes
+void *realloc(void *, int B) // extiende a B bytes 
+void free(void *) //libera
+
+## strings
+
+<string.h>
+
+funciones:
+
+strlen(),strcpy(), strcat(),strcmp(),strstr()
+
+# Ficheros
+

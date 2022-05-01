@@ -3,7 +3,9 @@
 
 #define PI 3.14159265358979323846
 
-//leer de un archivo la cantidad de filas y columnas y pasarlas como variales al typedef?
+int contarNumeroDeFilas(void);
+int contarNumeroDeColumnas(void);
+
 typedef struct{
     float x[11];
     float y[11];
@@ -27,6 +29,11 @@ tyMatriz3D scaleMatrix3D(tyMatriz3D Fig, float Sx , float Sy, float Sz, tyMatriz
 
 
 void main(){
+
+    int columnas,filas=0;
+    filas=contarNumeroDeFilas();
+    columnas=contarNumeroDeColumnas();
+    
     tyMatriz2D mat_1={{-6, -6, -7, 0, 7, 6, 6, -3, -3, 0, 0},{ -7, 2, 1, 8, 1, 2, -7, -7, -2, -2, -7}};
     tyMatriz2D mat_2={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
     mostrarMatriz2D(mat_1);
@@ -127,4 +134,55 @@ tyMatriz2D rotationMatrix2D(tyMatriz3D Fig, int angle, tyMatriz3D TFig){
     }
     return TFig[2][11];
     */
+}
+
+int contarNumeroDeFilas(void){
+    FILE * fp;
+    fp = fopen("fig_original.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int filas,i=0;
+    while(!feof(fp))
+    {
+    i = fgetc(fp);
+    if(i == '\n')
+    {
+        filas++;
+    }
+    }
+    fclose(fp);
+
+    fp = fopen("fig_original.txt","r");
+    return filas;
+
+}
+
+int contarNumeroDeColumnas(void){
+    
+    FILE * fp;
+    fp = fopen("fig_original.txt","r");
+
+    if(!fp){
+        printf("no se encontro el archivo\n");
+        exit(101);
+    }
+
+    int columnas,i=0;
+
+    while(!feof(fp) && fgetc(fp)!='\n'){
+        if (fgetc(fp)=='-'||fgetc(fp)==' '||fgetc(fp)=='\0'){
+            
+        }else{
+            columnas+=1;
+        }
+    }
+    columnas++;
+
+    fclose(fp);
+
+    return columnas;
 }

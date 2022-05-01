@@ -75,14 +75,18 @@ for (int i=0; i<40;i++){
 
 
 // genera tabla de frecuencias
-// cada intervalo dura el tiempo de 5 senoides ideales
-
-
 int cambios=0;
 int intervalo, in, sen, pos=0; 
 double mc=0;
 float dur_intervalo=0.1;
 frecuencias[3][16];
+/*
+    duracion de un intervalo: 0.1 (5 senoides ideales)
+    frecuencias[0][]=numero de intervalo
+    frecuencias[1][]=marca de clase del intervalo
+    frecuencias[2][]=ciclos completos de la señal del datalog cumplidos en ese intervalo
+
+*/
 
 
 printf("\nTabla de frecuencias (%s)\n\n",datalog);
@@ -97,7 +101,7 @@ while (intervalo < cantidad_intervalos)
             cambios += 1;
         }
     }
-    mc=dur_intervalo/2;
+    mc=((dur_intervalo-0.1)+dur_intervalo)/2;
 
     frecuencias[0][intervalo]=intervalo+1;
     frecuencias[1][intervalo]=mc;
@@ -113,12 +117,11 @@ while (intervalo < cantidad_intervalos)
     intervalo++;
 
 }
+printf("======================================== \n");
 printf("\n");
 
 
 //calculo promedio y desv estandar
-
-
 int prom =0;
 float desv, var,prom_htz,prom_ciclos=0;
 
@@ -142,6 +145,31 @@ desv=sqrt(var);
 
 
 printf("\ndesv estandar: %.4f\n",desv);
+
+printf("\n===============================");
+
+//calculo de valor eficaz
+
+float pico, amplitud, RMS=0;
+
+for (int i=0;i<nro_datos;i++){
+    if (datos[i]>pico)
+    {
+        pico=datos[i];
+    }
+}
+
+amplitud=pico-ordenada;
+printf("\npico: %.4f\namplitud: %.4f\n",pico, amplitud);
+
+RMS=amplitud/sqrt(2);
+
+printf("RMS: %.4f\n",RMS);
+
+
+
+
+
 
 }//end main
 
