@@ -67,7 +67,6 @@ int main(){
             jk=0;
         }
     }
-
     fclose(fp);
 
     printf("\n");
