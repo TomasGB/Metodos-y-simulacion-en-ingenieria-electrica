@@ -8,8 +8,8 @@ double showMatrix(int dimension, double Fig[3][11]);
 double transform(int dimension, double Fig[3][11],char operation, double parameters[3], double res[3][11]);
 double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]);
 double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]);
-double rotation2D(double Fig[3][11], float angle,double res[3][11]);
-double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double res[3][11]);
+double rotation2D(double Fig[3][11], float angle,double TFig[3][11]);
+double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double TFig[3][11]);
 int calculateDimension(void);
 double loadMatrix(int dimension, double Fig[3][11]);
 void saveInFile(int dimension,double Fig[3][11]);
@@ -20,10 +20,11 @@ int main(){
     int dimensiones=calculateDimension();
     double Fig[3][11];
 
+
     Fig[3][11]=loadMatrix(dimensiones,Fig);
     double TFig[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-   // Transformaciones 3D
+   // Transformaciones
     printf("Dimensiones: %d\n",dimensiones);
     printf("\n");
     printf("Figura original:\n");
@@ -43,7 +44,7 @@ int main(){
 
     int jk=0;
     int it=0;
-    char a;
+
     while(!feof(fp))
     {
         if(jk<1){
@@ -62,11 +63,18 @@ int main(){
         }
         if(it==3 && operacion=='r'){
             transform(dimensiones, Fig,operacion,parametros,TFig);
-            Fig[3][11]=TFig[3][11];
+
+            for(int i=0;i<dimensiones;i++){
+                for (int j=0;j<11;j++){
+                    Fig[i][j]=TFig[i][j];
+                }
+            }
             it=0;
             jk=0;
         }
+
     }
+
     fclose(fp);
 
     printf("\n");
@@ -110,7 +118,7 @@ double transform(int dimension, double Fig3D[3][11], char operation, double para
         if(dimension==3){
                 rotation3D(Fig3D,parameters[0],parameters[1],parameters[2],res);
             }else if(dimension==2){
-                rotation2D(Fig3D,parameters[2],res);
+                rotation2D(Fig3D,parameters[0],res);
             }
         break;
     }
@@ -142,26 +150,26 @@ double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, dou
     return TFig[3][11];
 }
 
-double rotation2D(double Fig[3][11], float angle,double res[3][11]){
+double rotation2D(double Fig[3][11], float angle,double TFig[3][11]){
     float ang_rad=(PI/180)*angle;
     double matrizDeRotacion[2][2]={{cos(ang_rad),(-1)*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
 
     for(int i=0;i<2;i++){
         for(int j=0;j<11;j++){
-            res[i][j]=0;
+            TFig[i][j]=0;
             for(int k=0;k<2;k++){
-                res[i][j]+=matrizDeRotacion[i][k]*Fig[k][j];
+                TFig[i][j]+=matrizDeRotacion[i][k]*Fig[k][j];
             }
         }
     }
 
     for(int i=0;i<11;i++){
-        res[2][i]=0;
+        TFig[2][i]=0;
     }
-    return res[3][11];
+    return TFig[3][11];
 }
 
-double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double res[3][11]){
+double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double TFig[3][11]){
     
     float ang_rad_X=(PI/180)*angle_x;
     float ang_rad_Y=(PI/180)*angle_y;
@@ -173,9 +181,9 @@ double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z
 
     for(int i_x=0;i_x<3;i_x++){
         for(int j_x=0;j_x<11;j_x++){
-            res[i_x][j_x]=0;
+            TFig[i_x][j_x]=0;
             for(int k_x=0;k_x<3;k_x++){
-                res[i_x][j_x]+=matrizDeRotacion_X[i_x][k_x]*Fig[k_x][j_x];
+                TFig[i_x][j_x]+=matrizDeRotacion_X[i_x][k_x]*Fig[k_x][j_x];
             }
         }
     }
@@ -184,21 +192,20 @@ double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z
         for(int j_y=0;j_y<11;j_y++){
             Fig[i_y][j_y]=0;
             for(int k_y=0;k_y<3;k_y++){
-                Fig[i_y][j_y]+=matrizDeRotacion_Y[i_y][k_y]*res[k_y][j_y];
+                Fig[i_y][j_y]+=matrizDeRotacion_Y[i_y][k_y]*TFig[k_y][j_y];
             }
         }
     }
 
     for(int i_z=0;i_z<3;i_z++){
         for(int j_z=0;j_z<11;j_z++){
-            res[i_z][j_z]=0;
+            TFig[i_z][j_z]=0;
             for(int k_z=0;k_z<3;k_z++){
-                res[i_z][j_z]+=matrizDeRotacion_Z[i_z][k_z]*Fig[k_z][j_z];
+                TFig[i_z][j_z]+=matrizDeRotacion_Z[i_z][k_z]*Fig[k_z][j_z];
             }
         }
     }
-
-    return res[3][11];
+    return TFig[3][11];
 }
 
 //========================= Archivos =====================================================
