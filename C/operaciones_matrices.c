@@ -227,7 +227,6 @@ int calculateDimension(void){
     filas+=1; 
 
     return filas;
-
 }
 
 double loadMatrix(int dimension, double matrix[3][11]){
