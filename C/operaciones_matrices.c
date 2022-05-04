@@ -44,6 +44,7 @@ int main(){
     int jk=0;
     int it=0;
     char a;
+    
     while(!feof(fp))
     {
         if(jk<1){
