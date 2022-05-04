@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define PI 3.14159265358979323846
 
@@ -25,7 +25,7 @@ int main(){
     double TFig[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
    // Transformaciones
-    printf("Dimensiones: %d\n",dimensiones);
+    printf("Dimensiones: %d \n", dimensiones);
     printf("\n");
     printf("Figura original:\n");
     showMatrix(dimensiones,Fig);
@@ -71,7 +71,6 @@ int main(){
             it=0;
             jk=0;
         }
-
     }
 
     fclose(fp);
@@ -128,10 +127,9 @@ double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz
         TFig[0][i]=Fig[0][i]+Tx; 
         TFig[1][i]=Fig[1][i]+Ty;
 
-        if(dimension==2){
-            }else{
+        if(dimension==3){
             TFig[2][i]=Fig[2][i]+Tz;
-        }
+            }
     }
     return TFig[3][11];
 }
@@ -140,9 +138,7 @@ double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, dou
         TFig[0][i]=Fig[0][i]*Sx; 
         TFig[1][i]=Fig[1][i]*Sy;
 
-        if(dimension==2){
-
-        }else{
+        if(dimension==3){
             TFig[2][i]=Fig[2][i]*Sz;
         }
     }
@@ -221,11 +217,11 @@ int calculateDimension(void){
     int filas,i=0;
     while(!feof(fp))
     {
-    i = fgetc(fp);
-    if(i == '\n')
-    {
-        filas++;
-    }
+        i = fgetc(fp);
+        if(i == '\n')
+        {
+            filas++;
+        }
     }
     fclose(fp);
     filas+=1; 
@@ -256,7 +252,6 @@ double loadMatrix(int dimension, double matrix[3][11]){
     fclose(fp);
 
     return matrix[3][11];
-
 }
 
 void saveInFile(int dimension,double Fig[3][11]){
