@@ -86,6 +86,8 @@ float dur_intervalo=0.1;
     frecuencias[0][]=numero de intervalo
     frecuencias[1][]=marca de clase del intervalo
     frecuencias[2][]=ciclos completos de la señal del datalog cumplidos en ese intervalo
+    frecuencias[3][]=frecuencia del intervalo
+    frecuencias[4][]=valor eficaz del intervalo
 
 */
 

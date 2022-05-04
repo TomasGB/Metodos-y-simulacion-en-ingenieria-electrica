@@ -72,7 +72,6 @@ int main(){
             it=0;
             jk=0;
         }
-
     }
 
     fclose(fp);
@@ -129,8 +128,7 @@ double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz
         TFig[0][i]=Fig[0][i]+Tx; 
         TFig[1][i]=Fig[1][i]+Ty;
 
-        if(dimension==2){
-            }else{
+        if(dimension==3){
             TFig[2][i]=Fig[2][i]+Tz;
         }
     }
@@ -141,9 +139,7 @@ double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, dou
         TFig[0][i]=Fig[0][i]*Sx; 
         TFig[1][i]=Fig[1][i]*Sy;
 
-        if(dimension==2){
-
-        }else{
+        if(dimension==3){
             TFig[2][i]=Fig[2][i]*Sz;
         }
     }
@@ -222,17 +218,16 @@ int calculateDimension(void){
     int filas,i=0;
     while(!feof(fp))
     {
-    i = fgetc(fp);
-    if(i == '\n')
-    {
-        filas++;
-    }
+        i = fgetc(fp);
+        if(i == '\n')
+        {
+            filas++;
+        }
     }
     fclose(fp);
     filas+=1; 
 
     return filas;
-
 }
 
 double loadMatrix(int dimension, double matrix[3][11]){
@@ -257,7 +252,6 @@ double loadMatrix(int dimension, double matrix[3][11]){
     fclose(fp);
 
     return matrix[3][11];
-
 }
 
 void saveInFile(int dimension,double Fig[3][11]){
