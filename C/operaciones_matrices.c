@@ -85,6 +85,18 @@ int main(){
 //========= Print Matrices ==========================
 
 double showMatrix(int dimension, double Fig[3][11]){
+    /*
+        autor: Tomas Gomez
+        fecha: 20/04
+        finalidad: Mostrar por consola la matriz de puntos la figura
+        argumentos de entrada:
+            + int dimensiones: Valor entero indicando si se trata de una figura en dos o tres dimensiones.
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+        
+        argumentos de salida: la funcion no posee argumentos de salida.
+        ejemplo de invocacion: showMatrix(dimensiones,Fig);
+    */
+
     for (int it_x=0;it_x<dimension;it_x++){
         for (int it_y=0;it_y<11;it_y++){
             printf("%0.4f ",Fig[it_x][it_y]);
@@ -95,7 +107,19 @@ double showMatrix(int dimension, double Fig[3][11]){
 //============== Transformaciones ======================
 
 double transform(int dimension, double Fig3D[3][11], char operation, double parameters[3], double res[3][11]){
-
+    /*
+        autor: Tomas Gomez
+        fecha: 01/05
+        finalidad: aplicar transformaciones en la figura.
+        argumentos de entrada:
+            + int dimensiones: Valor entero indicando si se trata de una figura en dos o tres dimensiones
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+            + char operation: Char indicando el tipo de operacion a aplicar
+            + double parameters[3]: Arreglo de largo 3 conteniendo los parametros para la transformacion
+        argumentos de salida: 
+            + double res[3][11]: Matriz conteniendo los puntos transformados
+        ejemplo de invocacion: transform(dimensiones, Fig,operacion,parametros,Fig);
+    */
     switch (operation){
         case 't':
             if(dimension==3){
@@ -123,6 +147,20 @@ double transform(int dimension, double Fig3D[3][11], char operation, double para
 }
 
 double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]){
+    /*
+        autor: Franco del Pardo
+        fecha: 20/04
+        finalidad: aplicar transformacion de traslacion en la figura.
+        argumentos de entrada:
+            + int dimensiones: Valor entero indicando si se trata de una figura en dos o tres dimensiones
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+            + float Tx: Parametro de traslacion en eje x
+            + float Ty: Parametro de traslacion en eje y
+            + float Tz: Parametro de traslacion en eje z
+        argumentos de salida: 
+            + double TFig[3][11]: Matriz conteniendo los puntos transformados
+        ejemplo de invocacion: translate(dimension,Fig3D,parameters[0],parameters[1],parameters[2], res);
+    */
     for (int i=0;i<11;i++){
         TFig[0][i]=Fig[0][i]+Tx; 
         TFig[1][i]=Fig[1][i]+Ty;
@@ -134,6 +172,20 @@ double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz
     return TFig[3][11];
 }
 double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, double TFig[3][11]){
+    /*
+        autor: Franco del Pardo
+        fecha: 20/04
+        finalidad: aplicar transformacion de escalado en la figura.
+        argumentos de entrada:
+            + int dimensiones: Valor entero indicando si se trata de una figura en dos o tres dimensiones
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+            + float Tx: Parametro de escalado en eje x
+            + float Ty: Parametro de escalado en eje y
+            + float Tz: Parametro de escalado en eje z
+        argumentos de salida: 
+            + double TFig[3][11]: Matriz conteniendo los puntos transformados
+        ejemplo de invocacion: scale(dimension,Fig3D,parameters[0],parameters[1],parameters[2], res);
+    */
     for (int i=0;i<11;i++){
         TFig[0][i]=Fig[0][i]*Sx; 
         TFig[1][i]=Fig[1][i]*Sy;
@@ -146,6 +198,17 @@ double scale(int dimension,double Fig[3][11], float Sx , float Sy, float Sz, dou
 }
 
 double rotation2D(double Fig[3][11], float angle,double TFig[3][11]){
+    /*
+        autor: Tomas Gomez
+        fecha: 22/04
+        finalidad: aplicar transformacion de rotacion en 2D en la figura.
+        argumentos de entrada:
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+            + float angle: angulo de rotacion
+        argumentos de salida: 
+            + double TFig[3][11]: Matriz conteniendo los puntos transformados
+        ejemplo de invocacion: rotation2D(Fig3D,parameters[0],res);
+    */
     float ang_rad=(PI/180)*angle;
     double matrizDeRotacion[2][2]={{cos(ang_rad),(-1)*sin(ang_rad)},{sin(ang_rad),cos(ang_rad)}};
 
@@ -165,7 +228,20 @@ double rotation2D(double Fig[3][11], float angle,double TFig[3][11]){
 }
 
 double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z,double TFig[3][11]){
-    
+    /*
+        autor: Tomas Gomez
+        fecha: 22/04
+        finalidad: aplicar transformacion de rotacion en 2D en la figura.
+        argumentos de entrada:
+            + double Fig[3][11]: Matriz conteniendo los puntos de la figura
+            + float angle_x: angulo de rotacion en eje x
+            + float angle_y: angulo de rotacion en eje y
+            + float angle_z: angulo de rotacion en eje z
+        argumentos de salida: 
+            + double TFig[3][11]: Matriz conteniendo los puntos transformados
+        ejemplo de invocacion: rotation3D(Fig3D,parameters[0],parameters[1],parameters[2],res);
+    */
+
     float ang_rad_X=(PI/180)*angle_x;
     float ang_rad_Y=(PI/180)*angle_y;
     float ang_rad_Z=(PI/180)*angle_z;
@@ -206,6 +282,16 @@ double rotation3D(double Fig[3][11], float angle_x, float angle_y, float angle_z
 //========================= Archivos =====================================================
 
 int calculateDimension(void){
+    /*
+        autor: Tomas Gomez
+        fecha: 02/05
+        finalidad: calcular la dimension de la figura original.
+        argumentos de entrada: esta funcion no posee argumentos de entrada
+        argumentos de salida: 
+            + int filas: numero de filas del archivo, que determina las dimensiones de la figura
+        ejemplo de invocacion: int dimensiones=calculateDimension();
+    */
+
     FILE * fp;
     fp = fopen("fig_original.txt","r");
 
@@ -230,6 +316,17 @@ int calculateDimension(void){
 }
 
 double loadMatrix(int dimension, double matrix[3][11]){
+    /*
+        autor: Tomas Gomez
+        fecha: 02/05
+        finalidad: cargar los puntos del archivo de texto a la matriz
+        argumentos de entrada:
+            + int dimension: dimension de la figura
+        argumentos de salida: 
+            + double matrix[3][11]: matriz con los puntos cargados
+        ejemplo de invocacion: Fig[3][11]=loadMatrix(dimensiones,Fig);
+    */
+
     FILE * fp;
     fp = fopen("fig_original.txt","r");
 
@@ -254,6 +351,16 @@ double loadMatrix(int dimension, double matrix[3][11]){
 }
 
 void saveInFile(int dimension,double Fig[3][11]){
+     /*
+        autor: Tomas Gomez
+        fecha: 02/05
+        finalidad: guardar los puntos transformados en un nuevo archivo de texto
+        argumentos de entrada:
+            + int dimension: dimension de la figura
+            + double Fig[3][11]: matriz de la figura resultante de la transformacion
+        argumentos de salida:esta funcion no posee argumentos de salida
+        ejemplo de invocacion: saveInFile(dimensiones,Fig);
+    */
     FILE *fp;
 
     fp = fopen( "fig_transformada.txt", "w+" );
