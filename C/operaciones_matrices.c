@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #define PI 3.14159265358979323846
 
@@ -25,7 +25,7 @@ int main(){
     double TFig[3][11]={{0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0},{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
    // Transformaciones
-    printf("Dimensiones: %d \n", dimensiones);
+    printf("Dimensiones: %d\n",dimensiones);
     printf("\n");
     printf("Figura original:\n");
     showMatrix(dimensiones,Fig);
@@ -167,7 +167,7 @@ double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz
 
         if(dimension==3){
             TFig[2][i]=Fig[2][i]+Tz;
-            }
+        }
     }
     return TFig[3][11];
 }
