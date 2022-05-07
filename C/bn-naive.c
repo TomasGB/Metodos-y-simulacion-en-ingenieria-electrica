@@ -223,8 +223,24 @@ int disp1(int Mar[FILS][COLS]) {
 	// INválido: acceder a Mar[][] de manera directa o iterar sobre la misma
 
   // ejm - estrategia: disparos al azar
+  
   f = azarFil();
   c = azarCol();
+
+
+/*
+  int j=1;
+  int i=j+1;
+
+  if ((i/2) ==0 && (j/2)==0){
+      f=elegirFil(i);
+      c=elegirCol(j);
+    }
+  
+  i+=2;
+  j++;
+    */
+  
   return fuego(Mar, f, c, JUGADOR1);
 }
 
@@ -418,4 +434,3 @@ int fuego(int Mar[FILS][COLS], int f, int c, int Jug) {
     return INVALIDO;
   }
 }
-

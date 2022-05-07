@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-//double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos);
 
 int main(){
+/*
+    autor: Tomas Gomez
+    fecha: 27/04
+    finalidad: calcular la frecuencia promedio y valor eficaz de los datalog
+    argumentos de entrada: la funcion no posee argumentos de entrada.
+    argumentos de salida: la funcion no posee argumentos de salida.
+*/
 
 char datalog[9];
 printf("\nIngrese nombre del datalog..\n");
@@ -64,15 +70,6 @@ printf("\nordenada: %.4f\n",ordenada);
 for(int i=0;i<nro_datos;i++){
     datos_corregidos[i]=ordenada-datos[i];
 }
-
-/*
-// print datos
-printf(" tiempo| datos |  datos_corregidos|\n");
-for (int i=0; i<40;i++){
-    printf("%d | %.4f | %.4f |\n",i,datos[i],datos_corregidos[i]);
-}
-*/
-
 
 // genera tabla de frecuencias
 
@@ -185,24 +182,3 @@ printf("RMS: %.4f\n",RMS);
 
 
 }//end main
-
-
-/*
-double regresionLineal(double datos[1571], double datos_corregidos[1571], int nro_datos){
-
-    double ordenada;
-
-    for (int i=0;i<nro_datos;i++){
-        ordenada+=datos[i];
-    }
-
-    ordenada=ordenada/nro_datos;
-    printf("\n %f\n",ordenada);
-
-    for(int i=0;i<1571;i++){
-        datos_corregidos[i]=ordenada-datos[i];
-    }
-
-    return datos_corregidos[1571];
-}
-*/
