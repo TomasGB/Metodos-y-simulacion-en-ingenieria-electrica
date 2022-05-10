@@ -1,6 +1,18 @@
 a=dlmread('fig_original.txt');
 b=dlmread('fig_transformada.txt');
 hold on
+<<<<<<< HEAD
+plot(a(1,:),a(2,:),'-b')
+plot(b(1,:),b(2,:),'-r')
+hold off
+
+======= 3D =========
+
+a=dlmread('fig_original3D.txt');
+b=dlmread('fig_transformada3D.txt');
+hold on
+=======
+>>>>>>> a3da68f9204804a4ebe4ee8acfe70c2f834f0e19
 plot3(a(1,:),a(2,:),a(3,:),'-b','linewidth',2)
 plot3(b(1,:),b(2,:),b(3,:),'-r','linewidth',2)
 xlabel('Eje x')

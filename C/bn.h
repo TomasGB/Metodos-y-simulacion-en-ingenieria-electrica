@@ -39,7 +39,7 @@
 #define KBLU  "\x1B[34m" // blue
 #define KMAG  "\x1B[35m" // magenta
 #define KCYN  "\x1B[36m" // cyan
-#define KWHT  "\033[37m" // white
+#define KWHT  "\x1B[37m" // white
 
 int initS(int [FILS][COLS], int);
 void mostrar(int [FILS][COLS], int);

@@ -22,6 +22,7 @@
 
 #include "bn.h"
 
+
 void main(void) {
   int S[FILS][COLS], jug, aFlote = BLANCOS, ch, t=0, sigue;
 
@@ -214,7 +215,10 @@ int disparar(int Mar[FILS][COLS], int JugNo) {
 
 int disp1(int Mar[FILS][COLS]) {
   // resultados posibles: TOUCHE, AGUA, INVALIDO
-  int f, c;
+  int f, c, tol;
+  static int filas[10]={0};
+  static int columnas[10]={0};
+  static int map_aux[FILS][COLS]={0};
 
 	// válidas: elegirFil(), elegirCol(); azarFil(); azarCol()
 	// válidas: radarS(), radarN(); radarE(); radarW(), radarSE(), radarSW(); radarNE(); radarNW()
@@ -223,21 +227,53 @@ int disp1(int Mar[FILS][COLS]) {
 	// INválido: acceder a Mar[][] de manera directa o iterar sobre la misma
 
   // ejm - estrategia: disparos al azar
-  
-  f = 1;
-  c = 1;
 
-  if ((f/2) ==0 && (c/2)==0){
-      f=elegirFil(f);
-      c=elegirCol(c);
-    }else{
-      f+=2;
-      c++;
-      f=elegirFil(f);
-      c=elegirCol(c);
+  tol=0; //para cuando se completan todas las filas impares
+
+  f=azarFil();
+  if ((f%2==0) || f==0){
+    f+=1;
+  }
+  c=0;
+
+  if (f==0){
+    f++;
+  }
+
+  while((map_aux[f][c]==-1) && tol<10){
+
+    while(((f%2)==0)){
+      f+=1;
     }
+    c=azarCol(); 
 
-  
+    if (tol=9){
+      while (((f%2)!=0) && (map_aux[f][c]==-1))
+      {
+        f=azarFil();
+        tol=0;
+      }
+      
+    }   
+    tol++;
+  }
+
+  /*
+   // tablero auxiliar
+   
+    printf("(%d  %d)\n",f,c);
+    map_aux[f][c]=-1;
+
+    elegirFil(f);
+    elegirCol(c);
+    for (int i = 0; i < 10; i++){
+      for (int j = 0; j < 10; j++){
+        printf("%d ",map_aux[i][j]);
+      }
+      printf("\n");
+    }
+  */
+
   return fuego(Mar, f, c, JUGADOR1);
 }
 
@@ -431,3 +467,4 @@ int fuego(int Mar[FILS][COLS], int f, int c, int Jug) {
     return INVALIDO;
   }
 }
+
