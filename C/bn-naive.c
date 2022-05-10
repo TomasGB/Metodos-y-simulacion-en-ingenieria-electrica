@@ -258,11 +258,11 @@ int disp1(int Mar[FILS][COLS]) {
     tol++;
   }
 
-  /*
+  map_aux[f][c]=-1;
+
    // tablero auxiliar
-   
+  /*
     printf("(%d  %d)\n",f,c);
-    map_aux[f][c]=-1;
 
     elegirFil(f);
     elegirCol(c);
