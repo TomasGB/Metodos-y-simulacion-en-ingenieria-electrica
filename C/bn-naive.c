@@ -224,22 +224,19 @@ int disp1(int Mar[FILS][COLS]) {
 
   // ejm - estrategia: disparos al azar
   
-  f = azarFil();
-  c = azarCol();
+  f = 1;
+  c = 1;
 
-
-/*
-  int j=1;
-  int i=j+1;
-
-  if ((i/2) ==0 && (j/2)==0){
-      f=elegirFil(i);
-      c=elegirCol(j);
+  if ((f/2) ==0 && (c/2)==0){
+      f=elegirFil(f);
+      c=elegirCol(c);
+    }else{
+      f+=2;
+      c++;
+      f=elegirFil(f);
+      c=elegirCol(c);
     }
-  
-  i+=2;
-  j++;
-    */
+
   
   return fuego(Mar, f, c, JUGADOR1);
 }
