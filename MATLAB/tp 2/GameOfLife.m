@@ -1,5 +1,21 @@
 function T=GameOfLife(tablero,dim,generaciones)
 %{
+    /*
+        autores: Tomas Gomez, Franco del Pardo, Santiago Palma, Facundo
+        Paez
+        fecha: 17/04
+        finalidad: Simular el 'Juego de la vida' en version esferica
+        argumentos de entrada:
+            + tablero: tablero con el estado inicial
+            + dim: dimension del tablero
+            + generaciones: numero de generaciones a simular
+        
+        argumentos de salida: la funcion no posee argumentos de salida.
+        ejemplo de invocacion: GameOfLife(tablero,dim,200)
+    */
+
+%}
+%{
     Antes de llamar la funcion, definir las dimensiones del tablero
     en una variable llamada 'dim' y despues generar un tablero con:
  
