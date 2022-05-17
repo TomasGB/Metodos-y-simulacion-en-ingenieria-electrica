@@ -15,9 +15,8 @@ double PI=(314159265359/(double)100000000000);
 void main(void){
     double result,d1,d3,d5,d7;
     double seno,cos,tan=0.0;
+    int angulo;
 
-
-    printf("Pi: %lf \n\n",PI);
 /*
     factorial(12,resFactoriales);
 
@@ -25,9 +24,11 @@ void main(void){
         printf("%d\n",resFactoriales[i]);
     }
 */  
+    printf("Ingrese un angulo: ");
+    scanf("%d",&angulo);
+    double ang=(angulo*PI)/180;
 
-    double ang=(45*PI)/180;
-    printf("ang : %f \n\n",ang);
+    printf("\n\nangulo en grados : %d    angulo en radianes: %f\n",angulo,ang);
 
     
 
@@ -44,10 +45,10 @@ void main(void){
     fprintf(fp,"=============================================================================\n");
     fclose(fp);
 
-
-    printf("\n============================================================================\n");
-    printf("| grados |  1 decimal |  3 decimales  |  5 decimales   |     7 decimales   |\n");
-    printf("============================================================================\n");
+    printf("\nTabla de angulos:\n");
+    printf("\n=======================================================================================\n");
+    printf("| grados |     1 decimal   |    3 decimales    |    5 decimales    |    7 decimales   |\n");
+    printf("=======================================================================================\n");
 
     for (int i=0;i<46;i++){
         ang=(i*PI)/180;
@@ -56,7 +57,7 @@ void main(void){
         d3=precision(tan, 3);
         d5=precision(tan, 5);
         d7=precision(tan, 7);
-        printf("|   %d    |     %lf    |     %lf     |     %lf    |     %lf     |\n",i,d1,d3,d5,d7);
+        printf("|   %d    |     %lf    |     %lf      |      %lf     |     %lf     |\n",i,d1,d3,d5,d7);
         guardarEnArchivo( i,d1,d3,d5,d7);
     }
     
@@ -80,45 +81,45 @@ double precision(double n, int precision){
 }
 
 double potencia(double grados, int exponente){
-    double resulta;
-    resulta=grados;
+    double resultado;
+    resultado=grados;
 
     if(exponente==0){
-        return resulta=1;
+        return resultado=1;
     }else if(exponente<0){
 
             for (int i=1;i<((-1)*exponente);i++){
-            resulta=grados*resulta;
+            resultado=grados*resultado;
         }
-        resulta=1/resulta;
+        resultado=1/resultado;
     }else{
         for (int i=1;i<exponente;i++){
-            resulta=grados*resulta;
+            resultado=grados*resultado;
         }
     }
 
 
-    return resulta;
+    return resultado;
 }
 
 
 double factorial(int numero, int resFactoriales[12]){
-    double res=0;
+    double resultado=0;
 
     if (numero==0){
-        res=1;
-        resFactoriales[numero]=res;
+        resultado=1;
+        resFactoriales[numero]=resultado;
     }
     else{
         if(resFactoriales[numero]==0){
-            res=numero*factorial(numero-1,resFactoriales);
-            resFactoriales[numero]=res;
+            resultado=numero*factorial(numero-1,resFactoriales);
+            resFactoriales[numero]=resultado;
         }else{
-            res=numero*resFactoriales[numero-1];
+            resultado=numero*resFactoriales[numero-1];
         }
 
     }
-    return res;
+    return resultado;
 }
 
 //================ Funciones trigonometricas ============================================
