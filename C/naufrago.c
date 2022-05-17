@@ -30,13 +30,10 @@ void main(void){
 
     printf("\n\nangulo en grados : %d    angulo en radianes: %f\n",angulo,ang);
 
-    
 
     tan=tangente(ang,resFactoriales,tan);
     printf("\ntan : %lf \n",tan);
 
-
-    
     //tabla de 0° a 45°
 
     FILE * fp;
@@ -69,6 +66,17 @@ void main(void){
 //=============================== Operaciones auxiliares =======================================================
 
 double precision(double n, int precision){
+    /*
+        autor: Tomas Gomez
+        fecha: 17/05
+        finalidad: Devolver la precision deseada
+        argumentos de entrada:
+            + double n: angulo 
+            + int precision: 
+        
+        argumentos de salida: 
+        ejemplo de invocacion: precision(tan, 5);
+    */
     int aux;
     double resultado;
 
@@ -81,6 +89,17 @@ double precision(double n, int precision){
 }
 
 double potencia(double grados, int exponente){
+    /*
+        autor: Tomas Gomez
+        fecha: 16/05
+        finalidad: Calcular potencias
+        argumentos de entrada:
+            + double grados: angulo en radianes 
+            + int exponente: exponente
+        
+        argumentos de salida: 
+        ejemplo de invocacion: potencia((-1),2);
+    */
     double resultado;
     resultado=grados;
 
@@ -104,6 +123,18 @@ double potencia(double grados, int exponente){
 
 
 double factorial(int numero, int resFactoriales[12]){
+    /*
+        autor: Tomas Gomez
+        fecha: 16/05
+        finalidad: Calcular factorial de un numero
+        argumentos de entrada:
+            + double numero: numero a calcular el factorial
+            + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
+        
+        argumentos de salida: 
+        ejemplo de invocacion: factorial(7,resFactoriales);
+    */
+
     double resultado=0;
 
     if (numero==0){
@@ -133,7 +164,8 @@ double sen(double angulo,  int resFactoriales[12],  double seno){
             + double angulo: angulo 
             + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
         
-        argumentos de salida: 
+        argumentos de salida:
+            + double seno: resultado del seno
         ejemplo de invocacion: sen(ang, resFactoriales,seno);
     */
 
@@ -144,8 +176,6 @@ double sen(double angulo,  int resFactoriales[12],  double seno){
         a=potencia((-1),i);
         b=potencia(angulo,((2*i)+1));
         c=factorial(((2*i)+1),resFactoriales);
-        
-        //printf("i: %d |%d | %lf | %lf\n",i,a,b,c);
 
         if(a<0){
             seno=seno-(b/c);
@@ -169,6 +199,7 @@ double coseno(double angulo,  int resFactoriales[12],  double coseno){
             + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
         
         argumentos de salida: 
+            + double coseno: resultado del coseno
         ejemplo de invocacion: coseno(ang, resFactoriales,cos);
     */
 
@@ -203,7 +234,8 @@ double tangente(double angulo,  int resFactoriales[12],  double tangente){
             + double angulo: angulo 
             + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
         
-        argumentos de salida: 
+        argumentos de salida:
+            + double tangente: resultado de la tangente
         ejemplo de invocacion: tangente(ang, resFactoriales,tan);
     */
     double seno,cos=0;
