@@ -74,13 +74,15 @@ código
 
     para saber el tamaño del arreglo: 
     
-    ``
-    (int)sizeof(nombreArreglo)/sizeof(tipoDeDatoDelArreglo)
-    ``
+    ````C
+
+        (int)sizeof(nombreArreglo)/sizeof(tipoDeDatoDelArreglo)
+
+    ````
 
 ## Estructuras
 
-````
+````C
 typedef struct{
     int dia;
     int mes;
@@ -100,7 +102,7 @@ para acceder a los campos es con ' . ', y para inicializar la variable es con
 
 `tyPaciente paciente1={datos};`
 
-```
+```C
 void paciente1(tyPaciente);
 paciente1.nombre;
 
@@ -111,7 +113,7 @@ paciente1.nombre;
 Como los struct pero estan en un solo registro de memoria
 para acceder a los campos es con ' . '
 
-```
+```C
 
 typedef union{
     int i;
@@ -122,7 +124,7 @@ typedef union{
 
 ## Enumerados
 
-```
+```C
 
 enum = Dias{Lun = 1, Mar = 2};
 
@@ -132,7 +134,7 @@ enum = Dias{Lun = 1, Mar = 2};
 
 C no cuenta con pasaje por referencia, hay que implementarlos manualmente
 
-```
+```C
 & - direccion en la memoria de una variable
 
 * - contenido de un espacio en la memoria (apuntado)
@@ -151,7 +153,7 @@ el nombre de un arreglo es un puntero a la primera celda
 
 ## punteros con arreglos
 
-````
+````C
 void f1(float A[], int N);  o  void f1(float *A, int N);
 
 f1(A,500);
@@ -161,12 +163,12 @@ f1(A,500);
 ## memoria lejana
 
 'stdlib.h' 'alloc.h' 'malloc.h'
-
+```c
 void *calloc(int N, int B) // N celdas de B bytes
 void *malloc(unsigned long B) // B bytes
 void *realloc(void *, int B) // extiende a B bytes 
 void free(void *) //libera
-
+```
 ## strings
 
 <string.h>
@@ -175,5 +177,35 @@ funciones:
 
 strlen(),strcpy(), strcat(),strcmp(),strstr()
 
-# Ficheros
 
+
+# Errores
+
+que es?
+
+La diferencia entre el valor deseado y el obtenido
+
+- redondeo
+- truncamiento
+- infinito
+
+
+## presición
+
++ Los valores numericos en una computadora se representan con ``presición fija``
+
+```
+
+cercanía entre valores expresables, para una medición analogica el nivel de precisión implícito es la mitad de la posición del dígito menos significativo.
+
+```
+
+## exactitud
+
+cercanía al valor real. Solo es estimable si se conoce el real.
+
+````
+
+En mediciones diferenciales importa mas la precision, en las absolutas la exactitud
+
+````
