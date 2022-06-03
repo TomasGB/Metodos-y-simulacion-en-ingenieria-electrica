@@ -1,125 +1,150 @@
 #include <stdio.h>
 
-
-double precision(double n, int precision);
+int angleCorrection(int angle);
+int signCorrection(int angle,int sign);
 double power(double n, int exponent);
 double factorial(int numero, int resFactorials[]);
 double absolute_value(double n);
 double sine(double angle,  int resFactorials[],  double tol, double sine);
 double cosine(double angle,  int resFactorials[], double tol, double cosine);
-double tangent(double angle,  int resFactorials[],double tangent);
-void saveInFile(int angle, double decimals1,double decimals3,double decimals5,double decimals7,int table, int sums_substracts, int prod_cocients);
+double tangent(double angle,  int resFactorials[],double tangent, double presicion);
+
 
 // Variables Globales
 
-int sumas_restas=0,productos_cocientes=0;
+int sumas_restas=0;
+int productos_cocientes=0;
 
 // El arreglo se eligio de 12 lugares porque a partir del factorial de 13 aparecen errores
 static int resFactorials[12]={0};
 double PI=(314159265359/(double)100000000000);
 
 void main(void){
-    double result,d1,d3,d5,d7;
-    double sin,cos,tan=100;
-    int angle;
+
+    double sin,cos,tan_latitude=100,tan_longitude=100;
+    int latitude,latitude_aux=0,longitude,longitude_aux=0,precision,sign_lat=1,sign_long=1;
 
 
-    printf("Ingrese un angulo: ");
-    scanf("%d",&angle);
-    double ang=(angle*PI)/180;
+    latitude=45;
+    longitude=-75;
+    precision=5;
 
-    printf("\n\nangulo en grados : %d    angulo en radianes: %f \n\n",angle,ang);
+    printf("\nlatitud : %d \n",latitude);
+    printf("\nlogitude : %d \n",longitude);
+    printf("\npresicion : %d decimales \n",precision);
+    
+    latitude_aux=angleCorrection(latitude);
+    sign_lat=signCorrection(latitude,sign_lat);
 
-
-
-    tan=tangent(ang,resFactorials,tan);
-    printf("\ntan : %lf \n",tan);
-    tan=0;
-
-    printf("\n");
-
-    //tabla de 0° a 45°
-
-    FILE * fp;
-    fp = fopen( "tabla_angulos.txt","w+");
-    fprintf(fp,"==============================================================================\n");
-    fprintf(fp,"| grados |   1 decimal   |  3 decimales  |  5 decimales  |    7 decimales    |\n");
-    fprintf(fp,"==============================================================================\n");
-    fclose(fp);
-    fp = fopen( "tabla_costo_computacional.txt","w+");
-    fprintf(fp,"==============================================================================================================================\n");
-    fprintf(fp,"| grados |     1 decimal   |     3 decimales   |     5 decimales   |    7 decimales   |  sumas/restas  | productos/cocientes |\n");
-    fprintf(fp,"==============================================================================================================================\n");
-    fclose(fp);
-
-    printf("\nTabla de angulos:\n");
-    printf("\n=======================================================================================\n");
-    printf("| grados |     1 decimal   |    3 decimales    |    5 decimales    |    7 decimales   |\n");
-    printf("=======================================================================================\n");
+    longitude_aux=angleCorrection(longitude);
+    sign_long=signCorrection(longitude,sign_long);
 
 
-    for (int i=0;i<46;i++){
-        ang=(i*PI)/180;
-        productos_cocientes+=2;
-        tan=tangent(ang,resFactorials,tan);
-        d1=precision(tan, 1);
-        d3=precision(tan, 3);
-        d5=precision(tan, 5);
-        d7=precision(tan, 7);
-        printf("|   %d    |     %lf    |     %lf      |      %lf     |     %lf     |\n",i,d1,d3,d5,d7);
-        saveInFile( i,d1,d3,d5,d7,1,0,0);
-    }
-    printf("========================================================================================\n");
+    double ang_lat,ang_long;
 
-    printf("\nTabla de costo computacional:\n");
-    printf("\n===================================================================================================================================\n");
-    printf("| grados |     1 decimal   |    3 decimales    |    5 decimales    |    7 decimales   |   sumas/restas   |   productos/cocientes  |\n");
-    printf("===================================================================================================================================\n");
+    ang_lat=(latitude_aux*PI)/180;
+    tan_latitude=sign_lat*tangent(ang_lat,resFactorials,tan_latitude,1/power(10,precision));
 
-    for (int i=0;i<46;i++){
-        sumas_restas=0;
-        productos_cocientes=0;
+    ang_long=(longitude_aux*PI)/180;
+    tan_longitude=sign_long*tangent(ang_long,resFactorials,tan_longitude,1/power(10,precision));
 
-        ang=(i*PI)/180;
-        productos_cocientes+=2;
-        tan=tangent(ang,resFactorials,tan);
-        d1=precision(tan, 1);
-        d3=precision(tan, 3);
-        d5=precision(tan, 5);
-        d7=precision(tan, 7);
-        printf("|   %d    |       %.1lf       |       %.3lf       |      %.5lf      |     %.7lf    |         %d        |           %d           |\n",i,d1,d3,d5,d7,sumas_restas,productos_cocientes);
-        saveInFile( i,d1,d3,d5,d7,2,sumas_restas,productos_cocientes);
-    }
-    printf("======================================================================================================================================\n");
+
+    printf("\ntan latitud : %lf \n",tan_latitude);
+    printf("\ntan logitude : %lf \n",tan_longitude);
 
 }
-
 
 //=============================== Operaciones auxiliares =======================================================
-
-double precision(double n, int precision){
+int angleCorrection(int angle){
     /*
         autor: Tomas Gomez
-        fecha: 17/05
-        finalidad: Devolver la precision deseada
+        fecha: 01/06
+        finalidad: Corregir angulos negativos o mayores a 360
         argumentos de entrada:
-            + double n: numero 
-            + int precision: numero de decimales deseados
-        
+            + int angle: angulo 
         argumentos de salida: 
-        ejemplo de invocacion: precision(tan, 5);
+
+        ejemplo de invocacion: angleCorrection(longitude);
     */
-    int aux;
-    double result;
+    int angle_aux=0;
+    // correccion para angulos negativos
+    if(angle <0){
+        while(angle<0){
+            angle=360+angle;
+        }
+    }
 
-    precision=power(10,precision);
-    n=n*precision;
-    aux=n;
-    result=(float)aux/precision;
-    productos_cocientes+=2;
+    //correccion para angulos mayores a 360
+    if(angle>360){
+        while(angle>360){
+            angle=angle-360;
+        }
+    }
+    angle_aux=angle;
 
-    return result;
+    //correccion para angulos mayores a 90
+    if(angle_aux>90){
+        while(angle_aux>90){
+
+            if(angle_aux>90 && angle_aux<=180){
+                angle_aux=180-angle_aux;
+            }
+            if(angle_aux>180 && angle_aux<=270){
+                angle_aux=270-angle_aux;
+            }
+            if(angle_aux>270 && angle_aux<=360){
+                angle_aux=360-angle_aux;
+            }
+        }
+    }else{
+        angle_aux;
+    }
+
+    return angle_aux;
 }
+
+int signCorrection(int angle,int sign){
+    /*
+        autor: Tomas Gomez
+        fecha: 01/06
+        finalidad: Devolver el signo correcto para el resultado
+        argumentos de entrada:
+            + int angle: angulo 
+        argumentos de salida: 
+            + int sign: signo a multiplicar el resultado (-1 o 1)
+        ejemplo de invocacion: signCorrection(latitude,sign_latitude);
+    */
+    int angle_aux=0;
+    // correccion para angulos negativos
+    if(angle <0){
+        while(angle<0){
+            angle=360+angle;
+        }
+    }
+
+    //correccion para angulos mayores a 360
+    if(angle>360){
+        while(angle>360){
+            angle=angle-360;
+        }
+    }
+    angle_aux=angle;
+
+    if(angle_aux<=90){
+        sign=1;
+    }
+    if(angle_aux>90 && angle_aux<=180){
+        sign=-1;
+    }
+    if(angle_aux>180 && angle_aux<=270){
+        sign=1;
+    }
+    if(angle_aux>270 && angle_aux<=360){
+        sign=-1;
+    }
+    return sign;
+}
+
 
 double power(double n, int exponent){
     /*
@@ -248,6 +273,7 @@ double sine(double angle,  int resFactorials[], double tol,double sine){
         old_value=sine;
 
     }
+
     return sine;
 }
 double cosine(double angle,  int resFactorials[], double tol, double cosine){
@@ -297,7 +323,7 @@ double cosine(double angle,  int resFactorials[], double tol, double cosine){
     return cosine;
 }
 
-double tangent(double angle,  int resFactorials[],double tangent){
+double tangent(double angle,  int resFactorials[],double tangent, double presicion){
     /*
         autor: Tomas Gomez
         fecha: 16/05
@@ -312,10 +338,9 @@ double tangent(double angle,  int resFactorials[],double tangent){
     */
 
     double sin=0,cos=0,error_tg=10,tol,u,v;
-    double tol_tg=(1/power(10,4));
     int it=0;
 
-    while (error_tg>tol_tg){
+    while (error_tg>presicion){
 
         tol=1/power(10,1+it);
 
@@ -327,49 +352,10 @@ double tangent(double angle,  int resFactorials[],double tangent){
         error_tg=( u * tol + v * tol)/power(cos,2);
         productos_cocientes+=4;
         sumas_restas+=2;
-
         it++;
     }
 
     tangent=(sin/cos);
     productos_cocientes+=1;
     return tangent;
-}
-
-//================ Archivo de texto ==================================================
-
-void saveInFile(int angle, double decimals1,double decimals3,double decimals5,double decimals7,int table, int sums_substracts, int prod_cocients){
-    /*
-        autor: Tomas Gomez
-        fecha: 16/05
-        finalidad: Guardar tabla de precision en un archvio txt
-        argumentos de entrada:
-            + double angle: angulo 
-            + double decimals1: tangente con 1 decimal
-            + double decimals3: tangente con 3 decimales
-            + double decimals5: tangente con 5 decimales
-            + double decimals7: tangente con 7 decimales
-            +int table: define que tabla se quiere guardar (1: Tabla de angulos, 2: Tabla de costo computacional))
-            +int sums_substracts
-            +int prod_cocients
-        
-        argumentos de salida: 
-        ejemplo de invocacion: saveInFile( i,d1,d3,d5,d7,2,sumas_restas,productos_cocientes);
-    */
-
-    FILE * fp;
-
-
-
-    if(table==1){
-        fp = fopen( "tabla_angulos.txt","a");
-        fprintf(fp,"|    %d   |      %.1lf      |     %.3lf     |    %.5lf    |     %.7lf     |\n",angle,decimals1,decimals3,decimals5,decimals7);
-        fclose(fp);
-    }else{
-        fp = fopen( "tabla_costo_computacional.txt","a");
-        fprintf(fp,"|   %d    |       %.1lf       |       %.3lf       |      %.5lf      |     %.7lf    |        %d      |          %d         |\n",angle,decimals1,decimals3,decimals5,decimals7,sums_substracts, prod_cocients);
-        fclose(fp);
-    }
-
-
 }
