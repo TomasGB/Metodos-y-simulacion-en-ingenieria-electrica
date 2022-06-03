@@ -209,3 +209,39 @@ cercanía al valor real. Solo es estimable si se conoce el real.
 En mediciones diferenciales importa mas la precision, en las absolutas la exactitud
 
 ````
+
+# Representacion de numeros
+
+negtivo mas pequeño: 1 111 (1) 000
+
+negtivo mas grande: 1 011 (1) 111
+
+positivo mas pequeño: 0 111 (1) 000
+
+positivo mas grande: 0 011 (1) 111
+
+## En decimal
+
+negtivo mas pequeño: 1 111 (1) 000 | -0.5*2^-3 = -0.0625
+
+negtivo mas grande: 1 011 (1) 111 | -0.9375*2^3 = -7.5
+
+positivo mas pequeño: 0 111 (1) 000 | 0.5*2^-3 = 0.0625
+
+positivo mas grande: 0 011 (1) 111 | 0.9375*2^3 = 7.5
+
+``el error relativo depende de la mantisa``
+
+(epsilon <= b^1-t) cantidad de digitos significativos en la mantisa
+
+la aritmetica en punto flotante es mas lenta.
+
+# Errores de truncado
+
+Redondeo
+
+    - redondeo
+    - truncamiento
+
+Truncado
+

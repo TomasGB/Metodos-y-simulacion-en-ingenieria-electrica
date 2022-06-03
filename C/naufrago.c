@@ -1,44 +1,55 @@
 #include <stdio.h>
 
-double precision(double n, int precision);
-double potencia(double grados, int exponente);
-double factorial(int numero, int resFactoriales[12]);
-double sen(double angulo,  int resFactoriales[12], double seno);
-double coseno(double angulo,  int resFactoriales[12], double coseno);
-double tangente(double angulo,  int resFactoriales[12],  double tangente);
-void guardarEnArchivo(int angulo, double decimales1,double decimales3,double decimales5,double decimales7);
 
-static int resFactoriales[12]={0};
+double precision(double n, int precision);
+double power(double n, int exponent);
+double factorial(int numero, int resFactorials[]);
+double absolute_value(double n);
+double sine(double angle,  int resFactorials[],  double tol, double sine);
+double cosine(double angle,  int resFactorials[], double tol, double cosine);
+double tangent(double angle,  int resFactorials[],double tangent);
+void saveInFile(int angle, double decimals1,double decimals3,double decimals5,double decimals7,int table, int sums_substracts, int prod_cocients);
+
+// Variables Globales
+
+int sumas_restas=0,productos_cocientes=0;
+
+// El arreglo se eligio de 12 lugares porque a partir del factorial de 13 aparecen errores
+static int resFactorials[12]={0};
 double PI=(314159265359/(double)100000000000);
 
 void main(void){
     double result,d1,d3,d5,d7;
-    double seno,cos,tan=0.0;
-    int angulo;
+    double sin,cos,tan=100;
+    int angle;
 
-/*
-    factorial(12,resFactoriales);
 
-    for (int i=0;i<12;i++){
-        printf("%d\n",resFactoriales[i]);
-    }
-*/  
     printf("Ingrese un angulo: ");
-    scanf("%d",&angulo);
-    double ang=(angulo*PI)/180;
+    scanf("%d",&angle);
+    double ang=(angle*PI)/180;
 
-    printf("\n\nangulo en grados : %d    angulo en radianes: %f\n",angulo,ang);
+    printf("\n\nangulo en grados : %d    angulo en radianes: %f \n\n",angle,ang);
 
 
-    tan=tangente(ang,resFactoriales,tan);
+
+    tan=tangent(ang,resFactorials,tan);
     printf("\ntan : %lf \n",tan);
+    tan=0;
+
+    printf("\n");
 
     //tabla de 0° a 45°
 
     FILE * fp;
-    fp = fopen( "tabla.txt","w+");
+    fp = fopen( "tabla_angulos.txt","w+");
+    fprintf(fp,"==============================================================================\n");
     fprintf(fp,"| grados |   1 decimal   |  3 decimales  |  5 decimales  |    7 decimales    |\n");
-    fprintf(fp,"=============================================================================\n");
+    fprintf(fp,"==============================================================================\n");
+    fclose(fp);
+    fp = fopen( "tabla_costo_computacional.txt","w+");
+    fprintf(fp,"==============================================================================================================================\n");
+    fprintf(fp,"| grados |     1 decimal   |     3 decimales   |     5 decimales   |    7 decimales   |  sumas/restas  | productos/cocientes |\n");
+    fprintf(fp,"==============================================================================================================================\n");
     fclose(fp);
 
     printf("\nTabla de angulos:\n");
@@ -46,18 +57,40 @@ void main(void){
     printf("| grados |     1 decimal   |    3 decimales    |    5 decimales    |    7 decimales   |\n");
     printf("=======================================================================================\n");
 
+
     for (int i=0;i<46;i++){
         ang=(i*PI)/180;
-        tan=tangente(ang,resFactoriales,tan);
+        productos_cocientes+=2;
+        tan=tangent(ang,resFactorials,tan);
         d1=precision(tan, 1);
         d3=precision(tan, 3);
         d5=precision(tan, 5);
         d7=precision(tan, 7);
         printf("|   %d    |     %lf    |     %lf      |      %lf     |     %lf     |\n",i,d1,d3,d5,d7);
-        guardarEnArchivo( i,d1,d3,d5,d7);
+        saveInFile( i,d1,d3,d5,d7,1,0,0);
     }
-    
+    printf("========================================================================================\n");
 
+    printf("\nTabla de costo computacional:\n");
+    printf("\n===================================================================================================================================\n");
+    printf("| grados |     1 decimal   |    3 decimales    |    5 decimales    |    7 decimales   |   sumas/restas   |   productos/cocientes  |\n");
+    printf("===================================================================================================================================\n");
+
+    for (int i=0;i<46;i++){
+        sumas_restas=0;
+        productos_cocientes=0;
+
+        ang=(i*PI)/180;
+        productos_cocientes+=2;
+        tan=tangent(ang,resFactorials,tan);
+        d1=precision(tan, 1);
+        d3=precision(tan, 3);
+        d5=precision(tan, 5);
+        d7=precision(tan, 7);
+        printf("|   %d    |       %.1lf       |       %.3lf       |      %.5lf      |     %.7lf    |         %d        |           %d           |\n",i,d1,d3,d5,d7,sumas_restas,productos_cocientes);
+        saveInFile( i,d1,d3,d5,d7,2,sumas_restas,productos_cocientes);
+    }
+    printf("======================================================================================================================================\n");
 
 }
 
@@ -70,208 +103,273 @@ double precision(double n, int precision){
         fecha: 17/05
         finalidad: Devolver la precision deseada
         argumentos de entrada:
-            + double n: angulo 
-            + int precision: 
+            + double n: numero 
+            + int precision: numero de decimales deseados
         
         argumentos de salida: 
         ejemplo de invocacion: precision(tan, 5);
     */
     int aux;
-    double resultado;
+    double result;
 
-    precision=potencia(10,precision);
+    precision=power(10,precision);
     n=n*precision;
     aux=n;
-    resultado=(float)aux/precision;
+    result=(float)aux/precision;
+    productos_cocientes+=2;
 
-    return resultado;
+    return result;
 }
 
-double potencia(double grados, int exponente){
+double power(double n, int exponent){
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Calcular potencias
         argumentos de entrada:
-            + double grados: angulo en radianes 
-            + int exponente: exponente
+            + double n: numero 
+            + int exponent: exponente
         
         argumentos de salida: 
-        ejemplo de invocacion: potencia((-1),2);
+        ejemplo de invocacion: power((-1),2);
     */
-    double resultado;
-    resultado=grados;
+    double result;
+    result=n;
 
-    if(exponente==0){
-        return resultado=1;
-    }else if(exponente<0){
+    if(exponent==0){
+        return result=1;
+    }else if(exponent<0){
 
-            for (int i=1;i<((-1)*exponente);i++){
-            resultado=grados*resultado;
+            for (int i=1;i<((-1)*exponent);i++){
+            result=n*result;
+            productos_cocientes+=1;
         }
-        resultado=1/resultado;
+        result=1/result;
+        productos_cocientes+=1;
     }else{
-        for (int i=1;i<exponente;i++){
-            resultado=grados*resultado;
+        for (int i=1;i<exponent;i++){
+            result=n*result;
+            productos_cocientes+=1;
         }
     }
 
 
-    return resultado;
+    return result;
 }
 
 
-double factorial(int numero, int resFactoriales[12]){
+double factorial(int number, int resFactorials[]){
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Calcular factorial de un numero
         argumentos de entrada:
             + double numero: numero a calcular el factorial
-            + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
-        
+            + double resFactoriales[]: Arreglo conteniendo resultados ya calculados de factoriales
         argumentos de salida: 
         ejemplo de invocacion: factorial(7,resFactoriales);
     */
 
-    double resultado=0;
+    double result=0;
 
-    if (numero==0){
-        resultado=1;
-        resFactoriales[numero]=resultado;
-    }
-    else{
-        if(resFactoriales[numero]==0){
-            resultado=numero*factorial(numero-1,resFactoriales);
-            resFactoriales[numero]=resultado;
-        }else{
-            resultado=numero*resFactoriales[numero-1];
+    if(resFactorials[number]!=0){
+        result=resFactorials[number];
+    }else{
+        if (number==0){
+            result=1;
+            resFactorials[number]=result;
         }
-
+        else{
+            if(resFactorials[number]==0){
+                result=number*factorial(number-1,resFactorials);
+                resFactorials[number]=result;
+                productos_cocientes+=1;
+            }else{
+                result=number*resFactorials[number-1];
+                productos_cocientes+=1;
+            }
+        }
     }
-    return resultado;
+
+    return result;
+}
+
+double absolute_value(double n){
+    if (n < 0) {
+        n = (-1) * n;
+    }
+    productos_cocientes+=1;
+
+    return n;
 }
 
 //================ Funciones trigonometricas ============================================
 
-double sen(double angulo,  int resFactoriales[12],  double seno){
+double sine(double angle,  int resFactorials[], double tol,double sine){
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Calcular el seno del angulo
         argumentos de entrada:
-            + double angulo: angulo 
-            + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
+            + double angle: angulo 
+            + double resFactorials[]: Arreglo conteniendo resultados ya calculados de factoriales
         
         argumentos de salida:
             + double seno: resultado del seno
-        ejemplo de invocacion: sen(ang, resFactoriales,seno);
+        ejemplo de invocacion: sine(ang, resFactorials,sine);
     */
 
     int a,i=0;
-    double b,c;
+    double b=0,c=0,old_value=10,actual_error=100;
 
-    while(i<5){
-        a=potencia((-1),i);
-        b=potencia(angulo,((2*i)+1));
-        c=factorial(((2*i)+1),resFactoriales);
+    while(actual_error>tol){
+        
+        a=power((-1),i);
+        b=power(angle,((2*i)+1));
+        c=factorial(((2*i)+1),resFactorials);
 
         if(a<0){
-            seno=seno-(b/c);
+            sine=sine-(b/c);
+            productos_cocientes+=1;
+            sumas_restas+=1;
         }else{
-            seno=seno+(b/c);
+            sine=sine+(b/c);
+            productos_cocientes+=1;
+            sumas_restas+=1;
         }
 
         i++;
-    }
+        
+        actual_error=(sine-old_value)/sine*100;
+        productos_cocientes+=2;
+        sumas_restas+=1;
 
-    return seno;
+        actual_error=absolute_value(actual_error);
+        old_value=sine;
+
+    }
+    return sine;
 }
-double coseno(double angulo,  int resFactoriales[12],  double coseno){
+double cosine(double angle,  int resFactorials[], double tol, double cosine){
 
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Calcular el coseno del angulo
         argumentos de entrada:
-            + double angulo: angulo 
-            + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
+            + double angle: angulo 
+            + double resFactorials[]: Arreglo conteniendo resultados ya calculados de factoriales
         
         argumentos de salida: 
-            + double coseno: resultado del coseno
-        ejemplo de invocacion: coseno(ang, resFactoriales,cos);
+            + double cosine: resultado del coseno
+        ejemplo de invocacion: cosine(ang, resFactorials,cos);
     */
 
     int a,i=0;
-    double b,c;
+    double b,c,old_value=10,actual_error=100;
 
-    while(i<5){
-        a=potencia((-1),i);
-        b=potencia(angulo,((2*i)));
-        c=factorial(((2*i)),resFactoriales);
-        
-        //printf("i: %d |%d | %lf | %lf\n",i,a,b,c);
+
+    while(actual_error>tol){
+
+        a=power((-1),i);
+        b=power(angle,((2*i)));
+        c=factorial(((2*i)),resFactorials);
 
         if(a<0){
-            coseno=coseno-(b/c);
+            cosine=cosine-(b/c);
+            productos_cocientes+=1;
+            sumas_restas+=1;
         }else{
-            coseno=coseno+(b/c);
+            cosine=cosine+(b/c);
+            productos_cocientes+=1;
+            sumas_restas+=1;
         }
 
         i++;
+        actual_error=(cosine-old_value)/cosine*100;
+        productos_cocientes+=2;
+        sumas_restas+=1;
+        actual_error=absolute_value(actual_error);
+        old_value=cosine;
+
     }
 
-    return coseno;
+    return cosine;
 }
 
-double tangente(double angulo,  int resFactoriales[12],  double tangente){
+double tangent(double angle,  int resFactorials[],double tangent){
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Calcular la tangente del angulo
         argumentos de entrada:
-            + double angulo: angulo 
-            + double resFactoriales[12]: Arreglo conteniendo resultados ya calculados de factoriales
+            + double angle: angulo 
+            + double resFactorials[]: Arreglo conteniendo resultados ya calculados de factoriales
         
         argumentos de salida:
-            + double tangente: resultado de la tangente
-        ejemplo de invocacion: tangente(ang, resFactoriales,tan);
+            + double tangent: resultado de la tangente
+        ejemplo de invocacion: tangent(ang, resFactoriales,tan);
     */
-    double seno,cos=0;
-    
-    seno=sen(angulo,resFactoriales,seno);
-    cos=coseno(angulo,resFactoriales,cos);
 
-    tangente=seno/cos;
+    double sin=0,cos=0,error_tg=10,tol,u,v;
+    double tol_tg=(1/power(10,4));
+    int it=0;
 
-    return tangente;
+    while (error_tg>tol_tg){
+
+        tol=1/power(10,1+it);
+
+        sin=sine(angle,resFactorials,tol,sin);
+        cos=cosine(angle,resFactorials,tol,cos);
+
+        u=absolute_value(sin);
+        v=absolute_value(cos);
+        error_tg=( u * tol + v * tol)/power(cos,2);
+        productos_cocientes+=4;
+        sumas_restas+=2;
+
+        it++;
+    }
+
+    tangent=(sin/cos);
+    productos_cocientes+=1;
+    return tangent;
 }
 
 //================ Archivo de texto ==================================================
 
-void guardarEnArchivo(int angulo, double decimales1,double decimales3,double decimales5,double decimales7){
+void saveInFile(int angle, double decimals1,double decimals3,double decimals5,double decimals7,int table, int sums_substracts, int prod_cocients){
     /*
         autor: Tomas Gomez
         fecha: 16/05
         finalidad: Guardar tabla de precision en un archvio txt
         argumentos de entrada:
-            + double angulo: angulo 
-            + double decimales1: tangente con 1 decimal
-            + double decimales3: tangente con 3 decimales
-            + double decimales5: tangente con 5 decimales
-            + double decimales7: tangente con 7 decimales
+            + double angle: angulo 
+            + double decimals1: tangente con 1 decimal
+            + double decimals3: tangente con 3 decimales
+            + double decimals5: tangente con 5 decimales
+            + double decimals7: tangente con 7 decimales
+            +int table: define que tabla se quiere guardar (1: Tabla de angulos, 2: Tabla de costo computacional))
+            +int sums_substracts
+            +int prod_cocients
         
         argumentos de salida: 
-        ejemplo de invocacion: guardarEnArchivo( i,d1,d3,d5,d7);
+        ejemplo de invocacion: saveInFile( i,d1,d3,d5,d7,2,sumas_restas,productos_cocientes);
     */
 
     FILE * fp;
-    
 
-    fp = fopen( "tabla.txt","a");
 
-    fprintf(fp,"|    %d   |      %.1lf      |     %.3lf     |    %.5lf    |     %.7lf     |\n",angulo,decimales1,decimales3,decimales5,decimales7);
-    fclose(fp);
+
+    if(table==1){
+        fp = fopen( "tabla_angulos.txt","a");
+        fprintf(fp,"|    %d   |      %.1lf      |     %.3lf     |    %.5lf    |     %.7lf     |\n",angle,decimals1,decimals3,decimals5,decimals7);
+        fclose(fp);
+    }else{
+        fp = fopen( "tabla_costo_computacional.txt","a");
+        fprintf(fp,"|   %d    |       %.1lf       |       %.3lf       |      %.5lf      |     %.7lf    |        %d      |          %d         |\n",angle,decimals1,decimals3,decimals5,decimals7,sums_substracts, prod_cocients);
+        fclose(fp);
+    }
 
 
 }
