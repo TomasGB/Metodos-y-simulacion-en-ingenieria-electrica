@@ -15,13 +15,29 @@ function res = raiz_cuadrada(N)
                     1.4142
 %}
 
+    tol = 0.0001;
+    res=N/2;
 
-    a=N;
-    error = 0.0001;
-    res=0;
+    if (N-(res*res)) < 0
+        error=-1*((N-(res*res)));
+    end
+    
+    while error > tol
+        
+        if(res*res)>N
+            res=res-(res/2);
+        else
+            res=res+(res/2);
+        end
+        
+        if (N-(res*res)) < 0
+            error=-1*((N-(res*res)));
+        else
+            error=((N-(res*res)));
 
-    while (res*res)<a && (a-(res*res))> error
-        res=res+error;
+        end
+
+        
     end
     
     
