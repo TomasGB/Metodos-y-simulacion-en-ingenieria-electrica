@@ -41,7 +41,7 @@ function H = CheckBorder(i,j,tablero,dim)
         end
         
         %if tablero(i-1,j+1) == 0
-        if (tablero(((dim/2)+dist(i,dim)),((dim/2)-dist(j,dim/2))) == 0)|| (tablero(((dim/2)+dist(i,dim)),((dim/2)-dist(j,dim/2))) == 0.5)
+        if (tablero(((dim/2)-dist(i,dim/2)),((dim/2)-dist(j,dim/2))) == 0)|| (tablero(((dim/2)+dist(i,dim/2)),((dim/2)-dist(j,dim/2))) == 0.5)
             vivos=vivos;
         else
             vivos=vivos+1;
