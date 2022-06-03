@@ -216,8 +216,6 @@ int disparar(int Mar[FILS][COLS], int JugNo) {
 int disp1(int Mar[FILS][COLS]) {
   // resultados posibles: TOUCHE, AGUA, INVALIDO
   int f, c, tol;
-  static int filas[10]={0};
-  static int columnas[10]={0};
   static int map_aux[FILS][COLS]={0};
 
 	// válidas: elegirFil(), elegirCol(); azarFil(); azarCol()
@@ -226,7 +224,6 @@ int disp1(int Mar[FILS][COLS]) {
 	// válido: utilizar un mapa (estático) local
 	// INválido: acceder a Mar[][] de manera directa o iterar sobre la misma
 
-  // ejm - estrategia: disparos al azar
 
   tol=0; //para cuando se completan todas las filas impares
 
