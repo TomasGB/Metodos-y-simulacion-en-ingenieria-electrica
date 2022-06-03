@@ -19,50 +19,45 @@ function [matriz_A,matriz_B,promedio,dif,proporcion] = Matrices(Dim)
                 [matriz_A,matriz_B,promedio,dif,proporcion] = Matrices(10)
                 
                 coord_1
-                     1     2
+                     5     2
 
                 coord_2
-                     7     8
+                     6     3
 
 
                 matriz_A =
 
-                    62    91    86    21    58    47    94    26    12    91
-                    86    99    29    28    50    28    76    46    86    20
-                    77    79    60    23    21    96    77    22    60    99
-                    63    62    67    27    54    17    15    12    87    59
-                    32    94    12    13    87    19    88    95    41    74
-                    70    62    65    67    89    22    95    37    50   100
-                    17    11    42    35    34    25    99    36    14    36
-                    66    20    14    59    28    66    88    40    26    47
-                    70    88    54    73    61    62    81    52    70    52
-                    76    54    27    55    68    14    56    68    40    79
+                    57    94    79    87    30    86    68    82    30    11
+                    39    24    71    56    69    76    26    77    83    72
+                    59    93    75    67    65    61    14    83    99    81
+                    46    82    68    96    45    26    75    44    12    58
+                    47    62    48    50    22    97    41    66    58    90
+                    26    50    45    15    12    34    70    62    17    91
+                    33    33    84    88    48    94    44    58    82    66
+                    11    78    38    67    26    30    67    35   100    22
+                    94    30    84    42    76    43    11    32    16    29
+                    69    15    81   100    43    17    92    51    95    26
 
 
                 matriz_B =
 
-                    91    86    21    58    47    94    26
-                    99    29    28    50    28    76    46
-                    79    60    23    21    96    77    22
-                    62    67    27    54    17    15    12
-                    94    12    13    87    19    88    95
-                    62    65    67    89    22    95    37
-                    11    42    35    34    25    99    36
+                    62    48
+                    50    45
 
 
                 promedio =
 
-                   51.7959
+                   51.2500
 
 
                 dif =
 
-                  -444
+                   -17
 
 
                 proporcion =
 
-                    3.8775
+                    0.1604
     %}
     clc
 
@@ -117,7 +112,7 @@ function [matriz_A,matriz_B,promedio,dif,proporcion] = Matrices(Dim)
 
     promedio=mean(matriz_B(:));
 
-    impares=matriz_B(1:2:end,:);
+    impares=matriz_B(:,1:2:end,:);
     %disp(impares)
 
     pares=matriz_B(2:2:end,:);
@@ -134,24 +129,14 @@ function [matriz_A,matriz_B,promedio,dif,proporcion] = Matrices(Dim)
     %genera las diagonal principal multiplicando la matriz
     %por la matriz identidad elemento a elemento
 
-    diagonal_A=matriz_A.*eye(length(matriz_A));
-
-    %{
-    la suma de las diagonales de la matriz B va a ser la suma de todos
-    los elementos de la matriz, menos el elemento de la primer columna y 
-    ultima fila y el elemento de la ultima columna y primer fila
-
-    ejemplo
-
-    matriz B          | Diagonales          | suma de las diagonales
-    85    26    48    | 42 + 11 = 53        | 53 + 216 + 74 = 343
-    42    79    48    | 85 + 79 + 52 = 216  |
-    23    11    52    | 26 + 48 = 74
-
-    %}
+    diagonal_ppal_A=diag(matriz_A);
+    diagonal_secundaria_A=diag(matriz_A,-1);
     
-    suma_diag_B=sum(sum(matriz_B))-matriz_B(1,end)-matriz_B(end,1);
-    suma_diag_A=sum(sum(diagonal_A));
+    diagonal_ppal_B=diag(matriz_B);
+    diagonal_secundaria_B=diag(matriz_B,-1);
+    
+    suma_diag_B=sum(diagonal_ppal_B)+sum(diagonal_secundaria_B);
+    suma_diag_A=sum(diagonal_ppal_A)+sum(diagonal_secundaria_A);
     
     %calcula la proporcion
     proporcion=suma_diag_B/suma_diag_A;
