@@ -1,4 +1,4 @@
-#include <stdio.h>
+//#include <stdio.h>
 
 int angleCorrection(int angle);
 int signCorrection(int angle,int sign);
@@ -24,15 +24,15 @@ void main(void){
     double sin,cos,tan_latitude=100,tan_longitude=100;
     int latitude,latitude_aux=0,longitude,longitude_aux=0,precision,sign_lat=1,sign_long=1;
 
-
     latitude=45;
     longitude=-75;
     precision=5;
 
+/*
     printf("\nlatitud : %d \n",latitude);
     printf("\nlogitude : %d \n",longitude);
     printf("\npresicion : %d decimales \n",precision);
-    
+    */
     latitude_aux=angleCorrection(latitude);
     sign_lat=signCorrection(latitude,sign_lat);
 
@@ -48,9 +48,10 @@ void main(void){
     ang_long=(longitude_aux*PI)/180;
     tan_longitude=sign_long*tangent(ang_long,resFactorials,tan_longitude,1/power(10,precision));
 
-
+    /*
     printf("\ntan latitud : %lf \n",tan_latitude);
     printf("\ntan logitude : %lf \n",tan_longitude);
+    */
 
 }
 

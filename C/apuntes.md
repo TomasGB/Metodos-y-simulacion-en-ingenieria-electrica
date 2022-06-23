@@ -245,3 +245,18 @@ Redondeo
 
 Truncado
 
+# Sistemas de ecuaciones lineales
+
+## métodos directos
+
+le doy una entrada y tengo una salida
+
+## métodos iterativos
+
+iteran hasta converger o no a un valor
+
+# Diferenciacion e Integracion numerica
+
+
+
+ 

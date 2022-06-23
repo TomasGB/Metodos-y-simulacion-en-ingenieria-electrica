@@ -147,6 +147,7 @@ double transform(int dimension, double Fig3D[3][11], char operation, double para
 }
 
 double translate(int dimension, double Fig[3][11], float Tx , float Ty, float Tz, double TFig[3][11]){
+    // para modificar poner que devuelvan void y en la declaracion double TFig[][11]
     /*
         autor: Franco del Pardo
         fecha: 20/04
